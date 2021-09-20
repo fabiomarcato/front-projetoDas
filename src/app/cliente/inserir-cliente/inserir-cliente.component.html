@@ -1,0 +1,36 @@
+<h1>Novo Cliente</h1>
+<div class="well">
+  <form #formCliente="ngForm">
+    <div class="form-group">
+      <label for="cpf">CPF:</label>
+      <input type="text" class="form-control" id="cpf" name="cpf" [(ngModel)]='cliente.cpf' #cpf="ngModel" required>
+      <!-- ngModel - se o usuário alterar na tela, automaticamente altera no componente e vice versa -->
+      <!-- #cpf="ngModel - Criar uma variável "cpf" para usar no HTML (ex. verificar erros) -->
+      <div *ngIf="cpf.errors && (cpf.dirty || cpf.touched)" class="alert alert-danger">
+        <div [hidden]="!cpf.errors?.required"> Digite o CPF do Cliente. </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input type="text" class="form-control" id="nome" name="nome" minlength="2" [(ngModel)]='cliente.nome'
+        #nome="ngModel" required>
+      <div *ngIf="nome.errors && (nome.dirty || nome.touched)" class="alert alert-danger">
+        <div [hidden]="!nome.errors?.required"> Digite o nome do Cliente </div>
+        <div [hidden]="!nome.errors?.minlength"> O nome deve conter ao menos 2 caracteres. </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="nome">Sobrenome:</label>
+      <input type="text" class="form-control" id="sobrenome" name="sobrenome" minlength="2"
+        [(ngModel)]='cliente.sobrenome' #sobrenome="ngModel" required>
+      <div *ngIf="sobrenome.errors && (sobrenome.dirty || sobrenome.touched)" class="alert alert-danger">
+        <div [hidden]="!sobrenome.errors?.required"> Digite o sobrenome do Cliente </div>
+        <div [hidden]="!sobrenome.errors?.minlength"> O nome deve conter ao menos 2 caracteres. </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="inserir()" [disabled]="!formCliente.form.valid">
+        <i class="fa fa-save" aria-hidden="true"></i> Salvar </button>
+      <a class="btn btn-secondary" [routerLink]="['/clientes']">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar </a>
+    </div>
+  </form>
+</div>
