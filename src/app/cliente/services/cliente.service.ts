@@ -32,9 +32,14 @@ export class ClienteService {
   buscarPorID(id: number): Cliente | undefined {
     // Obtem a lista completa de clientes
     let clientes: Cliente[] = this.listarTodos();
-
     // Retorna o primeiro elemento da lista que satisfaz a condição, caso contrario, undefined
     return clientes.find((cliente) => cliente.id === id);
+  }
+
+  buscaPorCpf(cpf: number): any{
+    let clientes = this.listarTodos();
+    let clienteEncontrado = clientes.find((cliente) => cliente.cpf == cpf);
+    return clienteEncontrado
   }
 
   atualizar(cliente: Cliente): void {

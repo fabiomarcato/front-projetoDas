@@ -1,0 +1,57 @@
+<h4>Novos Pedidos</h4>
+
+<div class="row">
+    <div class="col-4">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="CPF usuário" id="cpf" name="cpf" #cpf>
+            <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="buscarCpf(cpf.value)">Buscar CPF</button>
+        </div>        
+    </div>
+</div>
+<div *ngIf="cliente">
+  <div class="row">
+    <div class="col-8">
+      <div class="card">
+        <h5 class="card-header">Lista de Produtos</h5>
+        <div class="card-body">
+          <div *ngFor="let item of produtosPedido; let i=index;">
+            <div class="row">
+              <div class="col-6">
+                {{item.nomeProduto}}
+              </div>
+              <div class="col-6">                    
+                <div class="row">
+                  <div class="col-2">
+                    <i class="fas fa-minus-square" (click)="produtosPedido[i].quantidade = produtosPedido[i].quantidade - 1"></i>
+                  </div>
+                  <div class="col-2">
+                    <input type="text" name="quant[2]" class="form-control input-number" [(ngModel)]="produtosPedido[i].quantidade!">
+                  </div>
+                  <div class="col-2">
+                    <i class="fas fa-plus-square" (click)="produtosPedido[i].quantidade = produtosPedido[i].quantidade + 1"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" (click)="inserirNovoPedido()">Salvar Pedido</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card">
+        <h5 class="card-header">Resumo</h5>
+        <div class="card-body">
+          <div>
+            {{cliente.nome}} {{cliente.sobrenome}} - {{cliente.cpf}}
+          </div>
+          <div *ngFor="let item of produtosPedido; let i=index;">
+            <span *ngIf="produtosPedido[i].quantidade! > 0">
+              <h6>{{produtosPedido[i].nomeProduto}} - {{produtosPedido[i].quantidade}}u</h6>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
