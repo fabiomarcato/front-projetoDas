@@ -14,14 +14,14 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    NavMenuComponent
+    NavMenuComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ClienteModule,
     PedidoModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

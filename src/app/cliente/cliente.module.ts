@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgxMaskModule, IConfig} from 'ngx-mask';
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 import { ClienteService } from './services/cliente.service';
 import { ListarClienteComponent } from './listar-cliente/listar-cliente.component';
@@ -19,7 +21,8 @@ import { ModalClienteComponent } from './modal-cliente/modal-cliente.component';
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [
     ClienteService

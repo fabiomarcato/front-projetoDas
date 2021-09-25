@@ -21,7 +21,7 @@ export class InserirPedidoComponent implements OnInit {
   pedido!: Pedidos
   cliente!: Cliente
   produtosPedido!: any
-  listaPedidos!: any
+  message!: string | null
 
 
   @ViewChild('formNovoPedido') formNovoPedido!: NgForm
@@ -36,8 +36,13 @@ export class InserirPedidoComponent implements OnInit {
   }
 
   buscarCpf(cpf: string): void{
-    const cpfInteger = parseInt(cpf)
+    let cpfInteger = parseInt(cpf.replace(/\D/g, ''))
     this.cliente = this.clienteService.buscaPorCpf(cpfInteger)
+    if (!this.cliente){
+      this.message = 'Cliente não encontrado!'
+    } else{
+      this.message = null
+    }
   }
   
   gerarInteiroAleatorio(): number{
@@ -76,8 +81,15 @@ export class InserirPedidoComponent implements OnInit {
     for(let produto of this.produtosPedido){
       this.inserirProdutosPedido(produto)
     }
-    this.pedido.idCliente = this.cliente.id
-    this.pedidoService.inserirPedido(this.pedido)
-    this.router.navigate([""])
+
+    const quantidadeMaiorQueZero = (produto: any) => produto.quantidade > 0
+    if (!this.produtosPedido.some(quantidadeMaiorQueZero)){
+      this.message = 'Nenhum produto adicionado ao pedido.'
+    }else{
+      this.message = null
+      this.pedido.idCliente = this.cliente.id
+      this.pedidoService.inserirPedido(this.pedido)
+      this.router.navigate([""])
+    }
   }
 }
