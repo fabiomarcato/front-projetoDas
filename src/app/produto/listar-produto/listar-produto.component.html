@@ -1,0 +1,34 @@
+<h1>Produtos</h1>
+<table class="table table-striped table-bordered table-hover">
+  <tbody>
+    <tr>
+      <th>ID</th>
+      <th>Descrição</th>
+      <th class="text-center">
+        <!-- <a [routerLink]="['/produtos/novo']" ref="#" title="Novo" alt="Novo" class="btn btn-xs btn-success">
+          <i class="fa fa-plus" aria-hidden="true"></i> Novo
+        </a> -->
+        <button type="button" class="btn btn-xs btn-success" (click)="novoProduto()">
+            <i class="fa fa-plus" aria-hidden="true"></i> Novo
+        </button>
+      </th>
+    </tr>
+    <tr *ngFor="let produto of produtos">
+      <td>{{produto.id}}</td>
+      <td>{{produto.descricao}}</td>
+      <td class="text-center" style="width: 300px">
+        <!-- <a [routerLink]="['/produtos/editar', produto.id]"
+           href="#" title="Editar" alt="Editar" class="btn btn-xs btn-info">
+          <i class="fa fa-edit" aria-hidden="true"></i> Editar
+        </a> -->
+        <button type="button" class="btn btn-xs btn-info" (click)="editarProduto(produto)">
+          <i class="fa fa-pen" aria-hidden="true"></i> Editar
+        </button>
+        <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, produto)">
+          <i class="fa fa-times" aria-hidden="true"></i> Remover
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p *ngIf="produtos.length==0">Nenhum produto existente.</p>

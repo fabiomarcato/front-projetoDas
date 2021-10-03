@@ -8,6 +8,7 @@ import { ClienteModule } from './cliente/cliente.module';
 import { PedidoModule } from './pedido/pedido.module';
 import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { ProdutoModule } from './produto/produto.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
     ClienteModule,
     PedidoModule,
     FormsModule,
+    ProdutoModule
   ],
   providers: [],
   bootstrap: [AppComponent]
