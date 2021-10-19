@@ -58,9 +58,9 @@ export class ProdutoService {
   //   return produtos.find(produto => produto.id === id)
   // }
 
-  //listarTodos(): Observable<Produto[]>{
-    //return this.httpClient.get<Produto[]>(this.BASE_URL);
-  //}
+  listarTodos(): Observable<Produto[]>{
+    return this.httpClient.get<Produto[]>(this.BASE_URL);
+  }
 
   inserir(produto: Produto): Observable<Produto> {
     return this.httpClient.post<Produto>(this.BASE_URL, JSON.stringify(produto));

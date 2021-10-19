@@ -32,20 +32,23 @@ export class ListarPedidoComponent implements OnInit {
     this.pedido = this.pedidoService.listarTodosPedidos();
   }
 
+
   buscarPedidos(cpf: string): void {
-    let cpfInteger = parseInt(cpf.replace(/\D/g, ''))
-    this.cliente = this.clienteService.buscaPorCpf(cpfInteger)
-    if (!this.cliente) {
-      this.message = 'Cliente não encontrado!'
-    } else {
-      //validar this.cliente.id
-      this.clientePedido = this.pedidoService.buscarPedidosPorCliente(this.cliente.id? this.cliente.id:0);
-      if (!this.clientePedido) {
-        this.message = 'Cliente não possui pedidos!'
-      } else {
+    this.clienteService.buscaPorCpf(cpf).subscribe((data) => {
+      if(data){
+        data.forEach((x) => this.cliente = x)
         this.message = null
       }
-    }
+      else{
+        this.message = 'Cliente não encontrado!'
+        this.clientePedido = this.pedidoService.buscarPedidosPorCliente(this.cliente.id? this.cliente.id:0);
+        if (!this.clientePedido) {
+          this.message = 'Cliente não possui pedidos!'
+        } else {
+          this.message = null
+        }
+      }
+    })
   }
 
   verPedido(pedido: Pedidos) {
