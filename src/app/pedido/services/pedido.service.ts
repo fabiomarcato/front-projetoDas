@@ -37,6 +37,18 @@ export class PedidoService {
     const produtos: ProdutosPedido[] = this.listarTodosProdutosPedido();
     return produtos.find(produto => produto.idProdutosPedido === idProdutos);
   }
+
+  buscarPedidosPorCliente(idCliente: number): Pedidos []{
+    const pedidos: Pedidos[] = this.listarTodosPedidos();
+    return pedidos.filter(pedido => pedido.idCliente === idCliente);
+  }
+
+  remover(id:number): void {
+      let pedidos: Pedidos[] = this.listarTodosPedidos();
+      pedidos = pedidos.filter(pedido => pedido.idPedido !== id);
+      localStorage[LS_CHAVE_PEDIDOS] = JSON.stringify(pedidos);
+    }
+
 }
 
 

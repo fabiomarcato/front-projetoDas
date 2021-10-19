@@ -6,6 +6,8 @@ import { Cliente } from '../../shared/models/cliente.model';
 import { PedidoService } from '../services/pedido.service';
 import { Pedidos } from '../../shared/models/pedidos.model';
 import { ProdutosPedido } from '../../shared/models/pedidos.model';
+import { ProdutoService } from 'src/app/produto/services/produto.service';
+import { Produto } from 'src/app/shared/models/produto.model';
 
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,12 +24,13 @@ export class InserirPedidoComponent implements OnInit {
   cliente!: Cliente
   produtosPedido!: any
   message!: string | null
+  produtos: Produto[] = [];
 
 
   @ViewChild('formNovoPedido') formNovoPedido!: NgForm
 
 
-  constructor(private pedidoService: PedidoService, private clienteService: ClienteService,private router: Router) { }
+  constructor(private pedidoService: PedidoService, private clienteService: ClienteService, private produtoService: ProdutoService, private router: Router) { }
 
   ngOnInit(): void {
     this.pedido = new Pedidos()
@@ -69,6 +72,7 @@ export class InserirPedidoComponent implements OnInit {
 
   listarProdutos(): string[]{
     return ['Vinho', 'Queijo', 'Requeijão', 'Sabão', 'Detergente', 'Pão']
+    //return this.produtoService.listarTodos();
   }
 
   inserirProdutosPedido(produto: ProdutosPedido){

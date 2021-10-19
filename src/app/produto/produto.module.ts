@@ -12,6 +12,8 @@ import { EditarProdutoComponent } from './editar-produto/editar-produto.componen
 
 
 
+
+
 @NgModule({
   declarations: [
     ListarProdutoComponent,
