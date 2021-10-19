@@ -19,10 +19,10 @@
         <h5 class="card-header">Lista de Produtos</h5>
         <div class="card-body">
           <ul class="list-group">
-            <li *ngFor="let item of produtosPedido; let i=index;" class="list-group-item">
+            <li *ngFor="let item of produtos; let i=index;" class="list-group-item">
               <div class="row d-flex justify-content-start align-items-center">
                 <div class="col-8 ms-5">
-                  {{item.nomeProduto}}
+                  {{item.descricao}}
                 </div>
                 <div class="col-3">
                   <div class="row d-flex align-items-center">
@@ -42,7 +42,7 @@
         <h5 class="card-header">Resumo Pedido</h5>
         <div class="card-body">
           <div class="row">
-            <h6>Cliente: {{cliente.nome}} {{cliente.sobrenome}}</h6>
+           <h6>Cliente: {{cliente.nome}} {{cliente.sobreNome}}</h6>
           </div>
           <div class="row mb-3">
             <h6>CPF: {{cliente.cpf}}</h6>

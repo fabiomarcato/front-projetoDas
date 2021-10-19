@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { Cliente } from 'src/app/shared/models/cliente.model';
 
@@ -9,7 +11,15 @@ const LS_CHAVE: string = 'clientes';
   providedIn: 'root',
 })
 export class ClienteService {
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
+
+  BASE_URL = 'http://localhost:8080/api/v1/'
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
+
 
   listarTodos(): Cliente[] {
     const clientes = localStorage[LS_CHAVE];
@@ -36,10 +46,8 @@ export class ClienteService {
     return clientes.find((cliente) => cliente.id === id);
   }
 
-  buscaPorCpf(cpf: number): any{
-    let clientes = this.listarTodos();
-    let clienteEncontrado = clientes.find((cliente) => cliente.cpf == cpf);
-    return clienteEncontrado
+  buscaPorCpf(cpf: string): Observable<[]>{
+    return this.httpClient.get<[]>(`${this.BASE_URL}clientes/cpf/${cpf}`, this.httpOptions)
   }
 
   atualizar(cliente: Cliente): void {

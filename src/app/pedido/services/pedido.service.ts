@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Pedidos, ProdutosPedido } from '../../shared/models/pedidos.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 const LS_CHAVE_PEDIDOS: string ="pedidos";
 const LS_CHAVE_PRODUTOS_PEDIDO: string ="produtosPedido";
@@ -10,7 +12,19 @@ const LS_CHAVE_PRODUTOS_PEDIDO: string ="produtosPedido";
 })
 export class PedidoService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
+  //BASE_URL = 'http://localhost:8080/api/v1/clientes/cpf/071.218.839-88'
+  BASE_URL = 'http://localhost:8080/api/v1/clientes/cpf/'
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
+
+  metodoTeste(): Observable<[]>{
+    return this.httpClient.get<[]>(this.BASE_URL, this.httpOptions)
+  }
+
   listarTodosPedidos(): Pedidos[]{
     const pedidos = localStorage[LS_CHAVE_PEDIDOS];
     return pedidos ? JSON.parse(pedidos) : [];

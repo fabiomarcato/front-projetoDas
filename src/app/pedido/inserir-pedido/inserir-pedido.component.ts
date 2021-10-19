@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { ClienteService } from '../../cliente/services/cliente.service';
-import { Cliente } from '../../shared/models/cliente.model';
-
+import { ProdutoService } from 'src/app/produto/services/produto.service';
 import { PedidoService } from '../services/pedido.service';
 import { Pedidos } from '../../shared/models/pedidos.model';
 import { ProdutosPedido } from '../../shared/models/pedidos.model';
@@ -19,31 +17,42 @@ import { Router } from '@angular/router';
 export class InserirPedidoComponent implements OnInit {
 
   pedido!: Pedidos
-  cliente!: Cliente
+  cliente!: {cpf:string, nome:string, sobreNome:string, id:number}  
   produtosPedido!: any
   message!: string | null
-
+  produtos!: {descricao: string, id: number}[]
 
   @ViewChild('formNovoPedido') formNovoPedido!: NgForm
 
 
-  constructor(private pedidoService: PedidoService, private clienteService: ClienteService,private router: Router) { }
+  constructor(private pedidoService: PedidoService, private clienteService: ClienteService, private produtoService: ProdutoService,private router: Router) { }
 
   ngOnInit(): void {
     this.pedido = new Pedidos()
-    this.pedido.idPedido = this.gerarInteiroAleatorio();
+    this.pedido.idPedido = this.gerarInteiroAleatorio()
     this.produtosPedido = this.povoarProdutosPedido()
+    this.produtoService.listarTodosRest().subscribe(
+      (data) => {
+        this.produtos = data
+      }
+    )
+  }
+    
+  
+  
+  buscarCpf(cpf: string): void{
+    this.clienteService.buscaPorCpf(cpf).subscribe((data) => {
+      if(data){
+        data.forEach((x) => this.cliente = x)
+        this.message = null
+      }
+      else{
+        this.message = 'Cliente não encontrado!'
+      }
+    })
   }
 
-  buscarCpf(cpf: string): void{
-    let cpfInteger = parseInt(cpf.replace(/\D/g, ''))
-    this.cliente = this.clienteService.buscaPorCpf(cpfInteger)
-    if (!this.cliente){
-      this.message = 'Cliente não encontrado!'
-    } else{
-      this.message = null
-    }
-  }
+  
   
   gerarInteiroAleatorio(): number{
     const min = 1
@@ -87,7 +96,7 @@ export class InserirPedidoComponent implements OnInit {
       this.message = 'Nenhum produto adicionado ao pedido.'
     }else{
       this.message = null
-      this.pedido.idCliente = this.cliente.id
+      //this.pedido.idCliente = this.cliente.id
       this.pedidoService.inserirPedido(this.pedido)
       this.router.navigate([""])
     }

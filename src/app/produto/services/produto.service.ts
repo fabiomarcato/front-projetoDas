@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Produto } from 'src/app/shared/models/produto.model';
 
 const LS_CHAVE: string = "produtos"
@@ -8,7 +10,20 @@ const LS_CHAVE: string = "produtos"
 })
 export class ProdutoService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
+
+  BASE_URL = 'http://localhost:8080/api/v1/produtos/'
+  //BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/produtos'
+  
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
+
+  listarTodosRest(): Observable<[]>{
+    return this.httpClient.get<[]>(this.BASE_URL, this.httpOptions)
+  }
 
   listarTodos(): Produto[]{
     const produtos = localStorage[LS_CHAVE];
