@@ -9,6 +9,7 @@ import { PedidoModule } from './pedido/pedido.module';
 import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { ProdutoModule } from './produto/produto.module';
+import { HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ProdutoModule } from './produto/produto.module';
     ClienteModule,
     PedidoModule,
     FormsModule,
-    ProdutoModule
+    ProdutoModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -12,12 +12,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class EditarProdutoComponent implements OnInit {
   @ViewChild('formProduto') formProduto!: NgForm;
-  produto!: Produto;
+  produto!: any;
 
   constructor(
     private produtoService: ProdutoService,
     private route: ActivatedRoute,
-    private router: Router,
     public activeModal: NgbActiveModal
   ) { }
 
@@ -25,7 +24,6 @@ export class EditarProdutoComponent implements OnInit {
     let id = +this.route.snapshot.params['id'];
     const res = this.produtoService.buscarPorID(id);
     if (res !== undefined) {
-      this.produto = res;
     } else {
       throw new Error("Produto não encontrado: id = " + id);
     }
@@ -39,7 +37,7 @@ export class EditarProdutoComponent implements OnInit {
   }
 
   closeModal(){
-    document.location.reload();
+    //document.location.reload();
 }
 
 }

@@ -8,11 +8,15 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 import { InserirPedidoComponent } from './inserir-pedido/inserir-pedido.component';
 import { PedidoService } from './services/pedido.service';
+import { ListarPedidoComponent } from './listar-pedido/listar-pedido.component';
+import { ModalPedidoComponent } from './modal-pedido/modal-pedido.component';
 
 
 @NgModule({
   declarations: [
-    InserirPedidoComponent
+    InserirPedidoComponent,
+    ListarPedidoComponent,
+    ModalPedidoComponent
   ],
   imports: [
     CommonModule,
