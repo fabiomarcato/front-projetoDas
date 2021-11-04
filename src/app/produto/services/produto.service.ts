@@ -12,8 +12,7 @@ export class ProdutoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  BASE_URL = 'http://localhost:8080/api/v1/produtos/'
-  //BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/produtos'
+  BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/produtos'
   
   httpOptions = {
     headers: new HttpHeaders({
@@ -21,45 +20,8 @@ export class ProdutoService {
     })
   }
 
-  listarTodosRest(): Observable<[]>{
+  listarTodos(): Observable<[]>{
     return this.httpClient.get<[]>(this.BASE_URL, this.httpOptions)
-  }
-
-  // listarTodos(): Produto[]{
-  //   const produtos = localStorage[LS_CHAVE];
-  //   return produtos ? JSON.parse(produtos) : []
-  // }
-
-  // inserir(produto: Produto): void {
-  //   const produtos = this.listarTodos();
-  //   produto.id = new Date().getTime();
-  //   produtos.push(produto);
-  //   localStorage[LS_CHAVE] = JSON.stringify(produtos);
-  // }
-
-  // atualizar(produto: Produto): void{
-  //   const produtos: Produto[] = this.listarTodos();
-  //   produtos.forEach((obj, index, objs)=>{
-  //     if (produto.id === obj.id){
-  //       objs[index] = produto
-  //     }
-  //   });
-  //   localStorage[LS_CHAVE] = JSON.stringify(produtos)  
-  // }
-
-  // remover(id:number): void {
-  //   let produtos: Produto[] = this.listarTodos();
-  //   produtos = produtos.filter(produto => produto.id !== id);
-  //   localStorage[LS_CHAVE] = JSON.stringify(produtos);
-  // }
-
-  // buscarPorID(id: number): Produto | undefined{
-  //   const produtos: Produto[] = this.listarTodos();
-  //   return produtos.find(produto => produto.id === id)
-  // }
-
-  listarTodos(): Observable<Produto[]>{
-    return this.httpClient.get<Produto[]>(this.BASE_URL);
   }
 
   inserir(produto: Produto): Observable<Produto> {

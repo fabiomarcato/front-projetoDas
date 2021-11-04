@@ -41,7 +41,7 @@ export class ListarPedidoComponent implements OnInit {
       }
       else{
         this.message = 'Cliente não encontrado!'
-        this.clientePedido = this.pedidoService.buscarPedidosPorCliente(this.cliente.id? this.cliente.id:0);
+        this.clientePedido = this.pedidoService.buscarPedidosPorCliente(this.cliente.id!.toString())
         if (!this.clientePedido) {
           this.message = 'Cliente não possui pedidos!'
         } else {
@@ -56,7 +56,7 @@ export class ListarPedidoComponent implements OnInit {
     modalRef.componentInstance.pedido = pedido;
   }
 
-  remover($event: any, pedido: Pedidos, idCliente: number): void {
+  remover($event: any, pedido: Pedidos, idCliente: string): void {
     $event.preventDefault();
     if (confirm('Deseja realmente remover o pedido "' + pedido.idPedido + '"?')) {
       this.pedidoService.remover(pedido.idPedido!);

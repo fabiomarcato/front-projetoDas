@@ -13,7 +13,8 @@ const LS_CHAVE: string = 'clientes';
 export class ClienteService {
   constructor(private httpClient: HttpClient) {}
 
-  BASE_URL = 'http://localhost:8080/api/v1/'
+  BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/'
+  //BASE_URL = 'http://localhost:8080/api/v1/'
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'

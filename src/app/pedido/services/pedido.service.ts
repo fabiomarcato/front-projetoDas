@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Pedidos, ProdutosPedido } from '../../shared/models/pedidos.model';
+import { ItensDoPedido, Pedidos } from '../../shared/models/pedidos.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Produto } from 'src/app/shared/models/produto.model';
 
 const LS_CHAVE_PEDIDOS: string ="pedidos";
-const LS_CHAVE_PRODUTOS_PEDIDO: string ="produtosPedido";
-
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +12,26 @@ const LS_CHAVE_PRODUTOS_PEDIDO: string ="produtosPedido";
 export class PedidoService {
 
   constructor(private httpClient: HttpClient) { }
-  //BASE_URL = 'http://localhost:8080/api/v1/clientes/cpf/071.218.839-88'
-  BASE_URL = 'http://localhost:8080/api/v1/clientes/cpf/'
+  
+  BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/pedidos'
+  
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   }
 
-  metodoTeste(): Observable<[]>{
-    return this.httpClient.get<[]>(this.BASE_URL, this.httpOptions)
+  setOrder(order: {}): Observable<{}>{
+    return this.httpClient.post<{}>(this.BASE_URL, JSON.stringify(order), this.httpOptions)
+  }
+
+  converteProdutosEmProdutosPedido(produtos: Produto[], idCliente: string): ItensDoPedido[]{
+    let produtosPedido: ItensDoPedido[] = []
+    produtos.forEach(produto => {
+      let item: ItensDoPedido = {idCliente:idCliente, produto:produto, quantidade:0}
+      produtosPedido.push(item)
+    });
+    return produtosPedido
   }
 
   listarTodosPedidos(): Pedidos[]{
@@ -30,29 +39,7 @@ export class PedidoService {
     return pedidos ? JSON.parse(pedidos) : [];
   }
   
-  inserirPedido(pedido: Pedidos): void{
-    const pedidos = this.listarTodosPedidos();
-    pedidos.push(pedido);
-    localStorage[LS_CHAVE_PEDIDOS] = JSON.stringify(pedidos);
-  }
-  
-  listarTodosProdutosPedido(): ProdutosPedido[]{
-    const produtos = localStorage[LS_CHAVE_PRODUTOS_PEDIDO];
-    return produtos ? JSON.parse(produtos) : [];
-  }
-
-  inserirProdutosPedido(produto: ProdutosPedido): void{
-    const produtos = this.listarTodosProdutosPedido();
-    produtos.push(produto);
-    localStorage[LS_CHAVE_PRODUTOS_PEDIDO] = JSON.stringify(produtos);
-  }
-
-  buscarProdutosPedidoPorId(idProdutos: number): any{
-    const produtos: ProdutosPedido[] = this.listarTodosProdutosPedido();
-    return produtos.find(produto => produto.idProdutosPedido === idProdutos);
-  }
-
-  buscarPedidosPorCliente(idCliente: number): Pedidos []{
+  buscarPedidosPorCliente(idCliente: string): Pedidos []{
     const pedidos: Pedidos[] = this.listarTodosPedidos();
     return pedidos.filter(pedido => pedido.idCliente === idCliente);
   }
@@ -62,7 +49,6 @@ export class PedidoService {
       pedidos = pedidos.filter(pedido => pedido.idPedido !== id);
       localStorage[LS_CHAVE_PEDIDOS] = JSON.stringify(pedidos);
     }
-
 }
 
 
