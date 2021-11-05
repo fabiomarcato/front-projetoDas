@@ -18,8 +18,6 @@ export class ListarProdutoComponent implements OnInit {
     private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    //this.produtos = this.listarTodos();
-
     this.produtoService.listarTodos().subscribe({
       next: (data: Produto[]) => {
         if(data==null){
@@ -40,7 +38,6 @@ export class ListarProdutoComponent implements OnInit {
     $event.preventDefault();
     if (confirm('Deseja realmente remover o produto "' + produto.descricao + '"?')) {
       this.produtoService.remover(produto.id!);
-      //this.produtos = this.listarTodos();
       this.produtoService.listarTodos().subscribe({
         next: (data: Produto[]) => {
           if(data==null){

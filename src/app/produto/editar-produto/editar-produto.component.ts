@@ -37,7 +37,8 @@ export class EditarProdutoComponent implements OnInit {
   }
 
   closeModal(){
-    //document.location.reload();
+    this.activeModal.dismiss();
+    document.location.reload();
 }
 
 }

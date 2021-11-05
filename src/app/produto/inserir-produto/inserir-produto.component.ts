@@ -27,11 +27,12 @@ export class InserirProdutoComponent implements OnInit {
   inserir(): void{
     if(this.formProduto.form.valid) {
       this.produtoService.inserir(this.produto);
-      document.location.reload();
+      //document.location.reload();
     }
   }
 
   closeModal(){
+    this.activeModal.dismiss();
     document.location.reload();
 }
 }
