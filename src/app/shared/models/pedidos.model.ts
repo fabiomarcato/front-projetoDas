@@ -1,16 +1,20 @@
+import { Produto } from "./produto.model";
+
 export class Pedidos {
-    constructor(
-        public idPedido?: number,
-        public idCliente?: number,
-    ) {}
+  constructor(
+    public data?: string,
+    public idCliente?: string,
+    public idPedido?: number,
+    public itensDoPedido?: ItensDoPedido[]
+  ) {}
 }
 
-export class ProdutosPedido {
-    constructor(
-      public idProdutosPedido?: number,
-      public idPedido?: number,  
-      public nomeProduto?: String,
-      public quantidade?: number,
-    ) {}
-  }
-  
+export class ItensDoPedido {
+  constructor(
+    public idCliente?: string,
+    public idItemDoPedido?: number,
+    public produto?: Produto,
+    public quantidade?: number
+  ) {}
+}
+

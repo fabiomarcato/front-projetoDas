@@ -12,7 +12,7 @@
         <th>Quantidade</th>
       </tr>
       <tr *ngFor="let itens of itensPedido">
-        <td>{{itens.nomeProduto}}</td>
+        <td>{{itens.produto?.descricao}}</td>
         <td>{{itens.quantidade}}</td>
       </tr>
         </tbody>

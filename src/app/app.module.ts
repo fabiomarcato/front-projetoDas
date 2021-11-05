@@ -12,7 +12,6 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { ProdutoModule } from './produto/produto.module';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
