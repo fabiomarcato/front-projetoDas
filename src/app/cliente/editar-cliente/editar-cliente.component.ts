@@ -23,23 +23,42 @@ export class EditarClienteComponent implements OnInit {
   constructor(
     private clienteService: ClienteService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     // snapshot.params de ActivatedRoute dá acesso aos parâmetros passados
     // Operador + (antes do this) converte para número
     let id = +this.route.snapshot.params['id'];
     // Com o id, obtém a pessoa
-    const res = this.clienteService.buscarPorID(id);
-    if (res !== undefined) this.cliente = res;
+    const res = this.clienteService.buscarPorID(id).subscribe(
+      // chamada bem sucedida
+      data => {
+        console.log(data);
+      },
+      // Leitura do erro
+      err => {
+        console.log(err.error);
+      }
+    );
+    if (res !== undefined) { }
     else throw new Error('Cliente não econtrado: id = ' + id);
   }
 
-  atualizar(): void {
+  atualizar() {
     // Verifica se o formulário é válido
     if (this.formCliente.form.valid) {
-      this.clienteService.atualizar(this.cliente);
+      this.clienteService.atualizar(this.cliente)
+        .subscribe(
+          // chamada bem sucedida
+          data => {
+            console.log(data);
+          },
+          // Leitura do erro
+          err => {
+            console.log(err.error);
+          }
+        );
       this.router.navigate(['/clientes']);
     }
   }
