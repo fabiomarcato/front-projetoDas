@@ -6,7 +6,6 @@ import { Pedidos } from '../../shared/models/pedidos.model';
 import { Produto } from '../../shared/models/produto.model';
 import { ItensDoPedido } from '../../shared/models/pedidos.model';
 
-import axios from 'axios';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -34,25 +33,27 @@ export class InserirPedidoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getProdutos()
+    
   }
 
-  getProdutos(){
-    this.produtoService.listarTodos().subscribe({
-      next: (data) => {
-        if(data){
-          this.produtos = data
+  buscarProdutos(){
+    this.produtoService.listarTodos().subscribe(
+      (produtos) => {
+        if(produtos){
+          this.produtos = produtos
         } else{
           this.message = 'Nenhum produto encontrado!'
         }
-      }, 
-    })
+      },
+      (error) => {console.log(error)},
+      () => {this.listarProdutos()} 
+    )
   }
 
-  getDataAtual(){
-    let now = new Date()
-    now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds()
-    return now
+  listarDataAtual(){
+    let agora = new Date()
+    let dataAtual = `${agora.getFullYear()}-${(agora.getMonth() + 1)}-${agora.getDate()} ${agora.getHours()}:${agora.getMinutes()}:${agora.getSeconds()}`
+    return dataAtual
   }
 
   listarProdutos(){
@@ -60,60 +61,67 @@ export class InserirPedidoComponent implements OnInit {
   }
 
   buscarCpf(cpf: string): void{
-    this.clienteService.buscaPorCpf(cpf).subscribe((data) => {
-      if(data){
-        data.forEach((x) => this.cliente = x)
-        this.message = null
-        this.listarProdutos()
-      }
-      else{
-        this.message = 'Cliente não encontrado!'
-      }
-    })
+    this.clienteService.buscaPorCpf(cpf).subscribe(
+      (clientes) => {
+        if(clientes){
+          clientes.forEach((cliente) => this.cliente = cliente)
+          this.message = null
+          this.buscarProdutos()
+        } else{
+          this.message = 'Cliente não encontrado!'
+        }
+      },
+      (error) => {console.log(error)},
+    )
   }
   
-  inserirNovoPedido(){
+  pedidoValido(){
+    let pedidoValido = false
     const quantidadeMaiorQueZero = (produto: any) => produto.quantidade > 0
-    if (!this.produtosPedido.some(quantidadeMaiorQueZero)){
-      this.message = 'Nenhum produto adicionado ao pedido.'
-    }else{
+    
+    if (this.produtosPedido.some(quantidadeMaiorQueZero)){
+      pedidoValido = true
+    }
+    return pedidoValido
+  }
+  
+  converteDadosParaPedido(){
+    const quantidadeMaiorQueZero = (produto: any) => produto.quantidade > 0
+    let products = this.produtosPedido.filter(quantidadeMaiorQueZero)
+    let itens = []
+    for (let product of products){
+      itens.push(
+        {
+          idCliente:product.idCliente, 
+          produto:product.produto, 
+          quantidade:product.quantidade
+        }
+      )
+    }
+    this.pedido = {
+      data: this.listarDataAtual(), 
+      idCliente: products[0].idCliente?.toString(), 
+      itensDoPedido: itens
+    }
+  }
+
+  inserirNovoPedido(){
+    if(this.pedidoValido()){
       this.message = null
-      let products = this.produtosPedido.filter(quantidadeMaiorQueZero)
-      let itens = []
-      for (let product of products){
-        itens.push(
-          {
-            idCliente:product.idCliente, 
-            produto:product.produto, 
-            quantidade:product.quantidade
+      this.converteDadosParaPedido()
+      this.pedidoService.inserirPedido(this.pedido).subscribe(
+        (pedido) => {
+          if(pedido){
+            this.message = 'Pedido inserido com sucesso!'
+            this.formNovoPedido.reset()
+            this.produtosPedido = []
+            this.router.navigate([""])
           }
-        )
-      }
-      this.pedido = {
-        data: '2021-10-20 10:15:15', 
-        idCliente: products[0].idCliente?.toString(), 
-        itensDoPedido: itens
-      }
-      //console.log(itens)
-      //console.log(this.pedido)
-      let dados1 = {
-        "data": "2022-11-18 10:15:15",
-        "idCliente": "1",
-        "idPedido": 44,
-        "itensDoPedido": [
-          {
-            "idCliente": "1",
-            "idItemDoPedido": 26,
-            "produto": {
-              "descricao": "Fita adesiva",
-              "id": 6
-            },
-            "quantidade": 111
-          }
-        ]
-      }
-      this.pedidoService.setOrder(this.pedido).subscribe()
-      //this.router.navigate([""])
+        },
+        (error) => {console.log(error)}
+      )      
+    }else{
+      this.message = 'Nenhum produto adicionado ao pedido.'
     }
   }
 } 
