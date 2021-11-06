@@ -1,8 +1,8 @@
 export class Cliente {
   constructor(
+    public cpf?: string,
     public id?: number,
-    public cpf?: number,
-    public nome?: String,
-    public sobrenome?: String
+    public nome?: string,
+    public sobreNome?: string
   ) {}
 }

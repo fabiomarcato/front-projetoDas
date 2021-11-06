@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription;
 
   public dateNow = new Date();
-  public dDay = new Date('Nov 01 2021 23:30:00');
+  public dDay = new Date('Nov 27 2021 23:30:00');
   milliSecondsInASecond = 1000;
   hoursInADay = 24;
   minutesInAnHour = 60;

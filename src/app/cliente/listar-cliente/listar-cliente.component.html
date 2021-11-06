@@ -15,9 +15,9 @@
     <tr *ngFor="let cliente of clientes">
       <td>{{cliente.cpf}}</td>
       <td>{{cliente.nome}}</td>
-      <td>{{cliente.sobrenome}}</td>
+      <td>{{cliente.sobreNome}}</td>
       <td class="text-center" style="width: 300px">
-        <button type="button" class="btn btn-xs btn-info" (click)="abrirModalCliente(cliente)" >
+        <button type="button" class="btn btn-xs btn-info" (click)="abrirModalCliente(cliente)">
           <i class="fa fa-eye" aria-hidden="true"></i> Ver </button>
         <a [routerLink]="['/clientes/editar', cliente.id]" href="#" title="Editar" alt="Editar"
           class="btn btn-xs btn-info"> <i class="fa fa-edit" aria-hidden="true"></i> Editar
@@ -28,4 +28,3 @@
     </tr>
   </tbody>
 </table>
-
