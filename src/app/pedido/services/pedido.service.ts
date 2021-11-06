@@ -17,12 +17,12 @@ export class PedidoService {
   
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     })
   }
 
-  setOrder(order: {}): Observable<{}>{
-    return this.httpClient.post<{}>(this.BASE_URL, JSON.stringify(order), this.httpOptions)
+  inserirPedido(order: {}): Observable<[{}]>{
+    return this.httpClient.post<[{}]>(this.BASE_URL, JSON.stringify(order), this.httpOptions)
   }
 
   converteProdutosEmProdutosPedido(produtos: Produto[], idCliente: string): ItensDoPedido[]{

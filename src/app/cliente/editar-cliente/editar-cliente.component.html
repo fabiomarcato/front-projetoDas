@@ -3,7 +3,8 @@
   <form #formCliente="ngForm">
     <div class="form-group">
       <label for="idade">CPF:</label>
-      <input type="text" class="form-control" mask="CPF_CNPJ" id="cpf" name="cpf" [(ngModel)]="cliente.cpf" #cpf="ngModel" required>
+      <input type="text" class="form-control" mask="CPF_CNPJ" id="cpf" name="cpf" [(ngModel)]="cliente.cpf"
+        #cpf="ngModel" required>
       <div *ngIf="cpf.errors && (cpf.dirty || cpf.touched)" class="alert alert-danger">
         <div [hidden]="!cpf.errors?.required"> Digite o CPF do cliente.</div>
       </div>
@@ -20,7 +21,7 @@
     <div class="form-group">
       <label for="nome">Sobrenome:</label>
       <input type="text" class="form-control" id="sobrenome" name="sobrenome" minlength="2"
-        [(ngModel)]="cliente.sobrenome" #sobrenome="ngModel" required>
+        [(ngModel)]="cliente.sobreNome" #sobrenome="ngModel" required>
       <div *ngIf="sobrenome.errors && (sobrenome.dirty || sobrenome.touched)" class="alert alert-danger">
         <div [hidden]="!sobrenome.errors?.required">Digite o sobrenome do cliente.</div>
         <div [hidden]="!sobrenome.errors?.minlength">O sobrenome deve conter ao menos 2 caracteres.</div>
