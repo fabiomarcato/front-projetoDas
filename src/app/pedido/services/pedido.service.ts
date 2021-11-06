@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ItensDoPedido, Pedidos } from '../../shared/models/pedidos.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { Produto } from 'src/app/shared/models/produto.model';
 
-const LS_CHAVE_PEDIDOS: string ="pedidos";
 
 @Injectable({
   providedIn: 'root'
@@ -34,21 +33,16 @@ export class PedidoService {
     return produtosPedido
   }
 
-  listarTodosPedidos(): Pedidos[]{
-    const pedidos = localStorage[LS_CHAVE_PEDIDOS];
-    return pedidos ? JSON.parse(pedidos) : [];
+  listarTodosPedidos(): Observable<Pedidos[]>{
+    return this.httpClient.get<Pedidos []>(this.BASE_URL, this.httpOptions);
   }
   
-  buscarPedidosPorCliente(idCliente: string): Pedidos []{
-    const pedidos: Pedidos[] = this.listarTodosPedidos();
-    return pedidos.filter(pedido => pedido.idCliente === idCliente);
-  }
-
-  remover(id:number): void {
-      let pedidos: Pedidos[] = this.listarTodosPedidos();
-      pedidos = pedidos.filter(pedido => pedido.idPedido !== id);
-      localStorage[LS_CHAVE_PEDIDOS] = JSON.stringify(pedidos);
-    }
+  // Back não remove pedidos
+  // remover(id:number): void {
+  //     let pedidos: Pedidos[] = this.listarTodosPedidos();
+  //     pedidos = pedidos.filter(pedido => pedido.idPedido !== id);
+  //     localStorage[LS_CHAVE_PEDIDOS] = JSON.stringify(pedidos);
+  //   }
 }
 
 

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProdutoService } from '../services/produto.service';
 import { Produto } from 'src/app/shared/models/produto.model';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -16,7 +15,6 @@ export class InserirProdutoComponent implements OnInit {
 
   constructor(
     private produtoService: ProdutoService,
-    private router: Router,
     public activeModal: NgbActiveModal
   ) { }
 
@@ -26,8 +24,8 @@ export class InserirProdutoComponent implements OnInit {
 
   inserir(): void{
     if(this.formProduto.form.valid) {
-      this.produtoService.inserir(this.produto);
-      //document.location.reload();
+      this.produtoService.inserir(this.produto).subscribe();
+      document.location.reload();
     }
   }
 

@@ -12,11 +12,7 @@ export class ProdutoService {
 
   constructor(private httpClient: HttpClient) { }
 
-<<<<<<< HEAD
   BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/produtos/'
-=======
-  BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/produtos'
->>>>>>> cd56d822bbb0b4cf8a053c22461b283b0dc2d11f
   
   httpOptions = {
     headers: new HttpHeaders({
@@ -28,13 +24,6 @@ export class ProdutoService {
     return this.httpClient.get<[]>(this.BASE_URL, this.httpOptions)
   }
 
-<<<<<<< HEAD
-  listarTodos(): Observable<Produto[]>{
-    return this.httpClient.get<Produto[]>(this.BASE_URL, this.httpOptions);
-  }
-
-=======
->>>>>>> cd56d822bbb0b4cf8a053c22461b283b0dc2d11f
   inserir(produto: Produto): Observable<Produto> {
     console.log(produto);
     return this.httpClient.post<Produto>(this.BASE_URL, JSON.stringify(produto), this.httpOptions);
@@ -50,8 +39,8 @@ export class ProdutoService {
     return this.httpClient.get<Produto>(this.BASE_URL + id, this.httpOptions);
   }
   
-  remover(id: number): Observable<Produto> {
+  remover(id: number): Observable<number> {
     console.log(this.BASE_URL + id)
-    return this.httpClient.delete<Produto>(this.BASE_URL + id, this.httpOptions); 
+    return this.httpClient.delete<number>(this.BASE_URL + id, this.httpOptions); 
   }
 }

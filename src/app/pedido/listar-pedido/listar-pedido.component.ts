@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { PedidoService } from '../services/pedido.service';
 import { ClienteService } from 'src/app/cliente/services/cliente.service';
-import { ProdutoService } from 'src/app/produto/services/produto.service';
 import { ModalPedidoComponent } from '../modal-pedido/modal-pedido.component';
 
 import { Pedidos } from '../../shared/models/pedidos.model';
@@ -10,7 +9,7 @@ import { Cliente } from '../../shared/models/cliente.model';
 import { Produto } from 'src/app/shared/models/produto.model';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
   selector: 'app-listar-pedido',
@@ -26,29 +25,44 @@ export class ListarPedidoComponent implements OnInit {
   message!: string | null;
   produtos: Produto[] = [];
 
-  constructor(private pedidoService: PedidoService, private clienteService: ClienteService, private produtoService: ProdutoService, private router: Router, private modalService: NgbModal) { }
+  constructor(private pedidoService: PedidoService, private clienteService: ClienteService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.pedido = this.pedidoService.listarTodosPedidos();
-  }
-
-
-  buscarPedidos(cpf: string): void {
-    this.clienteService.buscaPorCpf(cpf).subscribe((data) => {
-      if(data){
-        data.forEach((x) => this.cliente = x)
-        this.message = null
-      }
-      else{
-        this.message = 'Cliente não encontrado!'
-        this.clientePedido = this.pedidoService.buscarPedidosPorCliente(this.cliente.id!.toString())
-        if (!this.clientePedido) {
-          this.message = 'Cliente não possui pedidos!'
-        } else {
-          this.message = null
+    this.pedidoService.listarTodosPedidos().subscribe({
+      next: (data: Pedidos[]) => {
+        if (data == null) {
+          this.pedido = [];
+        }
+        else {
+          this.pedido = data;
         }
       }
     })
+  }
+
+  buscarPedidos(cpf: string): void {
+    this.clienteService.buscaPorCpf(cpf).subscribe((data) => {
+      if (data) {
+        data.forEach((x) => this.cliente = x);
+        this.buscarPedidosPorCliente(this.cliente.id!.toString());
+        this.message = null;
+      }
+      else {
+        this.message = 'Cliente não encontrado!'
+      }
+    })
+  }
+
+  buscarPedidosPorCliente(idCliente: string): void {
+    this.pedidoService.listarTodosPedidos().subscribe((data) => {
+      //Esse filter ta retornando vazio sempre. Acho que pode ser algo da diferença da classe de pedidos do front pro back
+      this.clientePedido = data//.filter(pedido => pedido.idCliente == idCliente);
+      if (this.clientePedido?.length == 0) {
+        this.message = 'Cliente não possui pedidos!'
+      }
+    })
+
+    //
   }
 
   verPedido(pedido: Pedidos) {
@@ -56,16 +70,19 @@ export class ListarPedidoComponent implements OnInit {
     modalRef.componentInstance.pedido = pedido;
   }
 
-  remover($event: any, pedido: Pedidos, idCliente: string): void {
-    $event.preventDefault();
-    if (confirm('Deseja realmente remover o pedido "' + pedido.idPedido + '"?')) {
-      this.pedidoService.remover(pedido.idPedido!);
-      this.clientePedido = this.pedidoService.buscarPedidosPorCliente(idCliente)
-      if (!this.clientePedido) {
-        this.message = 'Cliente não possui pedidos!'
-      } else {
-        this.message = null
-      }
-    }
-  }
+  // Back não remove pedidos
+  //   remover($event: any, pedido: Pedidos, idCliente: string): void {
+  //     $event.preventDefault();
+  //     if (confirm('Deseja realmente remover o pedido "' + pedido.idPedido + '"?')) {
+  //       this.pedidoService.remover(pedido.idPedido!);
+  //       this.clientePedido = this.pedidoService.buscarPedidosPorCliente(idCliente)
+  //       if (!this.clientePedido) {
+  //         this.message = 'Cliente não possui pedidos!'
+  //       } else {
+  //         this.message = null
+  //       }
+  //     }
+  //   }
+  // }
+  // (click)="remover($event, pedido, pedido.idCliente!)"
 }

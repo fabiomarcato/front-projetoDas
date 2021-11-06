@@ -17,6 +17,7 @@ export class ModalPedidoComponent implements OnInit {
   constructor(public activeModal: NgbActiveModal, public pedidoService: PedidoService) { }
 
   ngOnInit(): void {
+    //Filtrar do retorno do back
     //this.itensPedido = this.pedidoService.listarTodosProdutosPedido().filter(produtoPedido => produtoPedido.idPedido == this.pedido.idPedido);
   }
 }
