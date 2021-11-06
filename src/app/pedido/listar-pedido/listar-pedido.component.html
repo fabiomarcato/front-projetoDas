@@ -25,11 +25,11 @@
       </tr>
       <tr *ngFor="let pedido of clientePedido">
         <td>{{pedido.idPedido}}</td>
-        <td>pedido.dataPedido</td>
+        <td>{{pedido.data}}</td>
         <td class="text-center" style="width: 300px">
           <button type="button" class="btn btn-xs btn-info" (click)="verPedido(pedido)">
             <i class="fa fa-eye" aria-hidden="true"></i> Ver </button>
-          <button href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, pedido, pedido.idCliente!)">
+          <button href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger">
             <i class="fa fa-times" aria-hidden="true"></i> Remover
           </button>
         </td>

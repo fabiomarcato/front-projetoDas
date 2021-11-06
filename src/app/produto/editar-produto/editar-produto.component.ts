@@ -31,13 +31,14 @@ export class EditarProdutoComponent implements OnInit {
 
   atualizar(): void {
     if (this.formProduto.form.valid) {
-      this.produtoService.atualizar(this.produto);
+      this.produtoService.atualizar(this.produto).subscribe();
       document.location.reload();
       }
   }
 
   closeModal(){
-    //document.location.reload();
+    this.activeModal.dismiss();
+    document.location.reload();
 }
 
 }

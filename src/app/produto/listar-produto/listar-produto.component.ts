@@ -18,39 +18,26 @@ export class ListarProdutoComponent implements OnInit {
     private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    //this.produtos = this.listarTodos();
+    this.listarTodos();
+  }
 
-    this.produtoService.listarTodos().subscribe({
+  listarTodos() {
+    return this.produtoService.listarTodos().subscribe({
       next: (data: Produto[]) => {
-        if(data==null){
+        if (data == null) {
           this.produtos = [];
         }
         else {
           this.produtos = data;
         }
       }
-    })
-  }
-
-  listarTodos() {
-    return this.produtoService.listarTodos();
+    });
   }
 
   remover($event: any, produto: Produto): void {
     $event.preventDefault();
     if (confirm('Deseja realmente remover o produto "' + produto.descricao + '"?')) {
-      this.produtoService.remover(produto.id!);
-      //this.produtos = this.listarTodos();
-      this.produtoService.listarTodos().subscribe({
-        next: (data: Produto[]) => {
-          if(data==null){
-            this.produtos = [];
-          }
-          else {
-            this.produtos = data;
-          }
-        }
-      })
+      this.produtoService.remover(produto.id!).subscribe();
     }
   }
 
