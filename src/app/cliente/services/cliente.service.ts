@@ -11,67 +11,40 @@ const LS_CHAVE: string = 'clientes';
   providedIn: 'root',
 })
 export class ClienteService {
-  constructor(private httpClient: HttpClient) {}
 
-  BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/'
-  //BASE_URL = 'http://localhost:8080/api/v1/'
+  constructor(private httpClient: HttpClient) { }
+
+  BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/clientes/'
+  //BASE_URL = 'http://localhost:8080/api/v1/clientes/'
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   }
 
-
-  listarTodos(): Cliente[] {
-    const clientes = localStorage[LS_CHAVE];
-    // Precisa do condicional, pois retorna undefined se a chave não existe
-    return clientes ? JSON.parse(clientes) : [];
-    //JSON.parse(string):dado um objeto JSON, retorna um objeto javascript
+  listarTodos(): Observable<[]> {
+    return this.httpClient.get<[]>(this.BASE_URL, this.httpOptions)
   }
 
-  inserir(cliente: Cliente): void {
-    // Obtém a lista completa de clientes
-    const clientes = this.listarTodos();
-    //Sete ID unico
-    cliente.id = new Date().getTime();
-    // Adiciona no final da lista
-    clientes.push(cliente);
-    //JSON.stringify(Objeto): dado um objeto javascript, retorna uma string JSON
-    localStorage[LS_CHAVE] = JSON.stringify(clientes);
+  inserir(cliente: Cliente): Observable<Cliente> {
+    return this.httpClient.post<Cliente>(this.BASE_URL, JSON.stringify(cliente), this.httpOptions);
   }
 
-  buscarPorID(id: number): Cliente | undefined {
-    // Obtem a lista completa de clientes
-    let clientes: Cliente[] = this.listarTodos();
-    // Retorna o primeiro elemento da lista que satisfaz a condição, caso contrario, undefined
-    return clientes.find((cliente) => cliente.id === id);
+  buscarPorID(id: number): Observable<Cliente> {
+    return this.httpClient.get<Cliente>(this.BASE_URL + id);
   }
 
-  buscaPorCpf(cpf: string): Observable<[]>{
+  buscaPorCpf(cpf: string): Observable<[]> {
     return this.httpClient.get<[]>(`${this.BASE_URL}clientes/cpf/${cpf}`, this.httpOptions)
   }
 
-  atualizar(cliente: Cliente): void {
-    // Obtém a lista completa de clientes
-    const clientes: Cliente[] = this.listarTodos();
-
-    // Varre a lista de clientes
-    clientes.forEach((obj, index, objs) => {
-      if (cliente.id === obj.id) {
-        objs[index] = cliente;
-      }
-    });
-
-    localStorage[LS_CHAVE] = JSON.stringify(clientes);
+  atualizar(cliente: Cliente): Observable<Cliente[]> {
+    return this.httpClient.put<Cliente[]>(this.BASE_URL + cliente.id, JSON.stringify(cliente));
   }
 
-  remover(id: number): void{
-    let clientes: Cliente[] = this.listarTodos();
-
-    // retorna a mesma lista com os registros que satisfazem a condição
-    clientes = clientes.filter (cliente => cliente.id !== id);
-
-    localStorage[LS_CHAVE] = JSON.stringify(clientes);
-
+  remover(id: number): Observable<Cliente> {
+    return this.httpClient.delete<Cliente>(this.BASE_URL + id);
   }
+
 }
+
