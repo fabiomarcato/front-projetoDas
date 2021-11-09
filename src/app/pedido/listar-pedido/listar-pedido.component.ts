@@ -9,7 +9,7 @@ import { Cliente } from '../../shared/models/cliente.model';
 import { Produto } from 'src/app/shared/models/produto.model';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
+
 
 @Component({
   selector: 'app-listar-pedido',

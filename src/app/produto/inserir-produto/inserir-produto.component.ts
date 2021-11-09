@@ -24,8 +24,9 @@ export class InserirProdutoComponent implements OnInit {
 
   inserir(): void{
     if(this.formProduto.form.valid) {
-      this.produtoService.inserir(this.produto).subscribe();
-      document.location.reload();
+      this.produtoService.inserir(this.produto).subscribe({
+        complete: () => document.location.reload()
+      });
     }
   }
 
