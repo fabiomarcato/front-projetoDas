@@ -35,7 +35,7 @@ export class ClienteService {
   }
 
   buscaPorCpf(cpf: string): Observable<[]> {
-    return this.httpClient.get<[]>(`${this.BASE_URL}clientes/cpf/${cpf}`, this.httpOptions)
+    return this.httpClient.get<[]>(`${this.BASE_URL}cpf/${cpf}`, this.httpOptions)
   }
 
   atualizar(cliente: Cliente): Observable<Cliente[]> {

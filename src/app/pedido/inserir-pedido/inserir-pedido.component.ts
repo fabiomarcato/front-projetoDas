@@ -57,7 +57,7 @@ export class InserirPedidoComponent implements OnInit {
   }
 
   listarProdutos(){
-    this.produtosPedido = this.pedidoService.converteProdutosEmProdutosPedido(this.produtos, this.cliente.id.toString())
+    this.produtosPedido = this.pedidoService.converteProdutosEmItensDoPedido(this.produtos, this.cliente.id.toString())
   }
 
   buscarCpf(cpf: string): void{
@@ -113,7 +113,6 @@ export class InserirPedidoComponent implements OnInit {
         (pedido) => {
           if(pedido){
             this.message = 'Pedido inserido com sucesso!'
-            this.formNovoPedido.reset()
             this.produtosPedido = []
             this.router.navigate([""])
           }

@@ -10,6 +10,9 @@ import { PedidoModule } from './pedido/pedido.module';
 import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { ProdutoModule } from './produto/produto.module';
+import { ProdutoService } from './produto/services/produto.service';
+import { ClienteService } from './cliente/services/cliente.service';
+import { PedidoService } from './pedido/services/pedido.service';
 
 
 @NgModule({
@@ -27,7 +30,7 @@ import { ProdutoModule } from './produto/produto.module';
     ProdutoModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [ProdutoService, ClienteService, PedidoService, HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
