@@ -40,12 +40,12 @@ export class ListarPedidoComponent implements OnInit {
     })
   }
 
-  buscarPedidos(cpf: string): void {
+  
+  buscarCpf(cpf: string): void {
     this.clienteService.buscaPorCpf(cpf).subscribe((data) => {
       if (data) {
         data.forEach((x) => this.cliente = x);
-        this.buscarPedidosPorCliente(this.cliente.id!.toString());
-        this.message = null;
+        this.buscarPedidosPorCliente(cpf);
       }
       else {
         this.message = 'Cliente não encontrado!'
@@ -53,36 +53,22 @@ export class ListarPedidoComponent implements OnInit {
     })
   }
 
-  buscarPedidosPorCliente(idCliente: string): void {
-    this.pedidoService.listarTodosPedidos().subscribe((data) => {
-      //Esse filter ta retornando vazio sempre. Acho que pode ser algo da diferença da classe de pedidos do front pro back
-      this.clientePedido = data//.filter(pedido => pedido.idCliente == idCliente);
-      if (this.clientePedido?.length == 0) {
+  buscarPedidosPorCliente(cpf: string): void {
+    console.log(cpf);
+    this.pedidoService.listarPedidosCliente(cpf).subscribe((data)=> {
+      if (data) {
+        this.clientePedido = data;
+      }
+      else {
         this.message = 'Cliente não possui pedidos!'
       }
-    })
-
-    //
+      
+    });
+    
   }
 
   verPedido(pedido: Pedidos) {
     const modalRef = this.modalService.open(ModalPedidoComponent);
     modalRef.componentInstance.pedido = pedido;
   }
-
-  // Back não remove pedidos
-  //   remover($event: any, pedido: Pedidos, idCliente: string): void {
-  //     $event.preventDefault();
-  //     if (confirm('Deseja realmente remover o pedido "' + pedido.idPedido + '"?')) {
-  //       this.pedidoService.remover(pedido.idPedido!);
-  //       this.clientePedido = this.pedidoService.buscarPedidosPorCliente(idCliente)
-  //       if (!this.clientePedido) {
-  //         this.message = 'Cliente não possui pedidos!'
-  //       } else {
-  //         this.message = null
-  //       }
-  //     }
-  //   }
-  // }
-  // (click)="remover($event, pedido, pedido.idCliente!)"
 }

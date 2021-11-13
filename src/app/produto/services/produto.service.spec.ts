@@ -7,20 +7,38 @@ import { of } from 'rxjs';
 
 describe('ProdutoService', () => {
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
-  let service: ProdutoService;
+  let produtoService: ProdutoService;
 
   beforeEach(() => {
     const spy = jasmine.createSpyObj('HttpClient', ['get']);
     TestBed.configureTestingModule({
       providers: [
         ProdutoService,
-        HttpClient
+        { provide: HttpClient, useValue: spy }
       ]
     });
-    service = TestBed.inject(ProdutoService);
+    httpClientSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
+    produtoService = TestBed.inject(ProdutoService);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(produtoService).toBeTruthy();
   });
+
+  it('Deve retornar a quantidade de produtos (Um request do HttpClient)', (done: DoneFn) => {
+    const expectedProducts: Produto[] = [{descricao: 'A', id: 12}];
+
+    httpClientSpy.get.and.returnValue(of(expectedProducts));
+
+    produtoService.listarTodos().subscribe(
+      (produtos: Produto[]) => 
+      {
+        expect(produtos.length).toEqual(1);
+        done();
+      },
+      done.fail
+    );
+    expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
+  });
+
 });
