@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { ProdutoService } from '../services/produto.service';
 import { Produto } from 'src/app/shared/models/produto.model';
@@ -10,12 +11,8 @@ describe('ProdutoService', () => {
   let produtoService: ProdutoService;
 
   beforeEach(() => {
-    const spy = jasmine.createSpyObj('HttpClient', ['get']);
     TestBed.configureTestingModule({
-      providers: [
-        ProdutoService,
-        { provide: HttpClient, useValue: spy }
-      ]
+      imports: [HttpClientModule],
     });
     httpClientSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
     produtoService = TestBed.inject(ProdutoService);
