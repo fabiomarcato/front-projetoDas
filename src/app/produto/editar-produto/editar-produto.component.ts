@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProdutoService } from '../services/produto.service';
-import { Produto } from 'src/app/shared/models/produto.model';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -31,14 +30,17 @@ export class EditarProdutoComponent implements OnInit {
 
   atualizar(): void {
     if (this.formProduto.form.valid) {
-      this.produtoService.atualizar(this.produto).subscribe();
-      document.location.reload();
-      }
+      this.produtoService.atualizar(this.produto).subscribe(
+        {
+          complete: () => document.location.reload()
+        }
+      );
+    }
   }
 
-  closeModal(){
+  closeModal() {
     this.activeModal.dismiss();
     document.location.reload();
-}
+  }
 
 }
