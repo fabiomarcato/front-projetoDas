@@ -28,16 +28,16 @@ export class ListarPedidoComponent implements OnInit {
   constructor(private pedidoService: PedidoService, private clienteService: ClienteService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.pedidoService.listarTodosPedidos().subscribe({
-      next: (data: Pedidos[]) => {
-        if (data == null) {
-          this.pedido = [];
-        }
-        else {
-          this.pedido = data;
-        }
-      }
-    })
+    // this.pedidoService.listarTodosPedidos().subscribe({
+    //   next: (data: Pedidos[]) => {
+    //     if (data == null) {
+    //       this.pedido = [];
+    //     }
+    //     else {
+    //       this.pedido = data;
+    //     }
+    //   }
+    // })
   }
 
   
@@ -49,20 +49,23 @@ export class ListarPedidoComponent implements OnInit {
       }
       else {
         this.message = 'Cliente não encontrado!'
+        this.clientePedido = undefined;
       }
     })
   }
 
   buscarPedidosPorCliente(cpf: string): void {
     console.log(cpf);
-    this.pedidoService.listarPedidosCliente(cpf).subscribe((data)=> {
-      if (data) {
+    this.pedidoService.listarPedidosCPF(cpf).subscribe((data)=> {
+      if (data.length != 0) {
         this.clientePedido = data;
+        console.log(this.clientePedido)
+        this.message = null;
       }
       else {
         this.message = 'Cliente não possui pedidos!'
+        this.clientePedido = undefined;
       }
-      
     });
     
   }

@@ -39,8 +39,12 @@ export class PedidoService {
     return this.httpClient.get<Pedidos[]>(this.BASE_URL, this.httpOptions);
   }
 
-  listarPedidosCliente(cpf: string): Observable<Pedidos[]> {
+  listarPedidosCPF(cpf: string): Observable<Pedidos[]> {
     return this.httpClient.get<Pedidos[]>(this.URL_CLIENTE_PEDIDOS + cpf, this.httpOptions);
+  }
+
+  listarItensPedido(idPedido: number): Observable<Pedidos[]> {
+    return this.httpClient.get<Pedidos[]>(this.BASE_URL + idPedido, this.httpOptions);
   }
 
 }

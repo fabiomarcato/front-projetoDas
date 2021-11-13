@@ -4,8 +4,9 @@
   <div class="col-4">
     <div class="input-group mb-3">
       <input type="text" class="form-control" mask="CPF_CNPJ" placeholder="Insira o CPF do usuário" id="cpf" name="cpf"
-        #cpf>
-      <button class="btn btn-outline-primary" type="button" id="search-orders" (click)="buscarPedidosPorCliente(cpf.value)">Buscar
+        #cpf required>
+      <button class="btn btn-outline-primary" type="button" id="search-orders"
+        (click)="buscarCpf(cpf.value)">Buscar
         pedidos</button>
     </div>
   </div>

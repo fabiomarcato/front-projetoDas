@@ -12,12 +12,15 @@ import { PedidoService } from '../services/pedido.service';
 })
 export class ModalPedidoComponent implements OnInit {
   @Input() pedido!: Pedidos;
-  itensPedido!: ItensDoPedido[];
+  itensDoPedido!: Pedidos[];
+
 
   constructor(public activeModal: NgbActiveModal, public pedidoService: PedidoService) { }
 
   ngOnInit(): void {
-    //Filtrar do retorno do back
-    //this.itensPedido = this.pedidoService.listarTodosProdutosPedido().filter(produtoPedido => produtoPedido.idPedido == this.pedido.idPedido);
+    this.pedidoService.listarItensPedido(this.pedido.idPedido!).subscribe((data) => {
+      this.itensDoPedido = data;
+      console.log(this.itensDoPedido);
+    });
   }
 }
