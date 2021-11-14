@@ -54,9 +54,9 @@ describe('PedidoService', () => {
       id: 1,
       descricao: 'Produto 1',
     }];
-    
     const idCliente = '1';
     const produtosPedido = service.converteProdutosEmItensDoPedido(produto, idCliente);
+    
     expect(produtosPedido).toEqual([{
       idCliente: '1',
       produto: {

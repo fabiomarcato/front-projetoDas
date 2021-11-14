@@ -29,11 +29,12 @@ export class ListarPedidoComponent implements OnInit {
 
   ngOnInit(): void {
     this.pedidoService.listarTodosPedidos().subscribe({
-      next: (data: Pedidos[]) => {
+      next: (data: []) => {
         if (data == null) {
           this.pedido = [];
         }
         else {
+          console.log(data);
           this.pedido = data;
         }
       }

@@ -1,7 +1,7 @@
 <h4>Novos Pedidos</h4>
 
-<div *ngIf="message" class="alert alert-danger">
-  <div>{{message}}</div>
+<div *ngIf="message" class="alert alert-warning">
+  <div>{{message}} <a *ngIf="link" href="{{link}}" style="margin-left: 15px; color: black; text-decoration: none;"> Voltar para Home</a></div>
 </div>
 
 <div class="row mt-5">
