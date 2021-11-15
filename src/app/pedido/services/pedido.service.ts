@@ -25,7 +25,6 @@ export class PedidoService {
     return this.httpClient.post<[{}]>(this.BASE_URL, JSON.stringify(order), this.httpOptions)
   }
 
-  //alterar nome para converteProdutosEmItensDoPedido
   converteProdutosEmItensDoPedido(produtos: Produto[], idCliente: string): ItensDoPedido[]{
     let produtosPedido: ItensDoPedido[] = []
     produtos.forEach(produto => {
@@ -35,8 +34,8 @@ export class PedidoService {
     return produtosPedido
   }
 
-  listarTodosPedidos(): Observable<Pedidos[]> {
-    return this.httpClient.get<Pedidos[]>(this.BASE_URL, this.httpOptions);
+  listarTodosPedidos(): Observable<[]>{
+    return this.httpClient.get<[]>(this.BASE_URL, this.httpOptions);
   }
 
   listarPedidosCPF(cpf: string): Observable<Pedidos[]> {

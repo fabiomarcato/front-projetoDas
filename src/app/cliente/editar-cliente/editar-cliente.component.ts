@@ -12,7 +12,7 @@ import { ClienteService } from '../services/cliente.service';
 export class EditarClienteComponent implements OnInit {
   // Recebe uma referência do formulário aqui no componente
   // 'formCliente' deve ser o nome do formulário no HTML
-  @ViewChild('formCliente') formCliente!: NgForm;
+  @ViewChild('formCliente') formCliente!: NgForm;  
 
   // Atributo de binding, os dados digitados no formulário vêm para este atributo
   cliente!: Cliente;
@@ -35,11 +35,12 @@ export class EditarClienteComponent implements OnInit {
       // chamada bem sucedida
       data => {
         console.log(data);
+        this.cliente = data
       },
       // Leitura do erro
       err => {
         console.log(err.error);
-      }
+      },
     );
     if (res !== undefined) { }
     else throw new Error('Cliente não econtrado: id = ' + id);

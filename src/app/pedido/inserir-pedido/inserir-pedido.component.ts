@@ -21,6 +21,7 @@ export class InserirPedidoComponent implements OnInit {
   cliente!: {cpf:string, nome:string, sobreNome:string, id:number}  
   produtosPedido: ItensDoPedido[] = []
   message!: string | null
+  link!: string | null
   produtos!: Produto[]
   
   @ViewChild('formNovoPedido') formNovoPedido!: NgForm
@@ -113,8 +114,9 @@ export class InserirPedidoComponent implements OnInit {
         (pedido) => {
           if(pedido){
             this.message = 'Pedido inserido com sucesso!'
+            this.link = "/"
             this.produtosPedido = []
-            this.router.navigate([""])
+            //this.router.navigate([""])
           }
         },
         (error) => {console.log(error)}
