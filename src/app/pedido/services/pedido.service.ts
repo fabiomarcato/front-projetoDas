@@ -21,12 +21,12 @@ export class PedidoService {
     })
   }
 
-  inserirPedido(order: {}): Observable<{}>{
+  inserirPedido(order: {}): Observable<{}> {
     return this.httpClient.post<[{}]>(this.BASE_URL, JSON.stringify(order), this.httpOptions)
   }
 
   //alterar nome para converteProdutosEmItensDoPedido
-  converteProdutosEmItensDoPedido(produtos: Produto[], idCliente: string): ItensDoPedido[]{
+  converteProdutosEmItensDoPedido(produtos: Produto[], idCliente: string): ItensDoPedido[] {
     let produtosPedido: ItensDoPedido[] = []
     produtos.forEach(produto => {
       let item: ItensDoPedido = { idCliente: idCliente, produto: produto, quantidade: 0 }
