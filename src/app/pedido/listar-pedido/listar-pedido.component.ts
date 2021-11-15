@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
 import { PedidoService } from '../services/pedido.service';
 import { ClienteService } from 'src/app/cliente/services/cliente.service';
 import { ModalPedidoComponent } from '../modal-pedido/modal-pedido.component';
-
 import { Pedidos } from '../../shared/models/pedidos.model';
 import { Cliente } from '../../shared/models/cliente.model';
 import { Produto } from 'src/app/shared/models/produto.model';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -28,62 +25,37 @@ export class ListarPedidoComponent implements OnInit {
   constructor(private pedidoService: PedidoService, private clienteService: ClienteService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.pedidoService.listarTodosPedidos().subscribe({
-      next: (data: []) => {
-        if (data == null) {
-          this.pedido = [];
-        }
-        else {
-          console.log(data);
-          this.pedido = data;
-        }
-      }
-    })
   }
 
-  buscarPedidos(cpf: string): void {
+  buscarCpfCliente(cpf: string): void {
     this.clienteService.buscaPorCpf(cpf).subscribe((data) => {
       if (data) {
         data.forEach((x) => this.cliente = x);
-        this.buscarPedidosPorCliente(this.cliente.id!.toString());
-        this.message = null;
+        this.buscarPedidosPorCliente(cpf);
       }
       else {
         this.message = 'Cliente não encontrado!'
+        this.clientePedido = undefined;
       }
     })
   }
 
-  buscarPedidosPorCliente(idCliente: string): void {
-    this.pedidoService.listarTodosPedidos().subscribe((data) => {
-      //Esse filter ta retornando vazio sempre. Acho que pode ser algo da diferença da classe de pedidos do front pro back
-      this.clientePedido = data//.filter(pedido => pedido.idCliente == idCliente);
-      if (this.clientePedido?.length == 0) {
-        this.message = 'Cliente não possui pedidos!'
+  buscarPedidosPorCliente(cpf: string): void {;
+    this.pedidoService.listarPedidosCPF(cpf).subscribe((data) => {
+      if (data.length != 0) {
+        this.clientePedido = data;
+        this.message = null;
       }
-    })
+      else {
+        this.message = 'Cliente não possui pedidos!'
+        this.clientePedido = undefined;
+      }
+    });
 
-    //
   }
 
   verPedido(pedido: Pedidos) {
     const modalRef = this.modalService.open(ModalPedidoComponent);
     modalRef.componentInstance.pedido = pedido;
   }
-
-  // Back não remove pedidos
-  //   remover($event: any, pedido: Pedidos, idCliente: string): void {
-  //     $event.preventDefault();
-  //     if (confirm('Deseja realmente remover o pedido "' + pedido.idPedido + '"?')) {
-  //       this.pedidoService.remover(pedido.idPedido!);
-  //       this.clientePedido = this.pedidoService.buscarPedidosPorCliente(idCliente)
-  //       if (!this.clientePedido) {
-  //         this.message = 'Cliente não possui pedidos!'
-  //       } else {
-  //         this.message = null
-  //       }
-  //     }
-  //   }
-  // }
-  // (click)="remover($event, pedido, pedido.idCliente!)"
 }

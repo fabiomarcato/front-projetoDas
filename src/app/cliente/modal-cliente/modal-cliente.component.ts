@@ -11,6 +11,6 @@ export class ModalClienteComponent implements OnInit {
   @Input() cliente!: Cliente;
 
   constructor(public activeModal: NgbActiveModal) {}
-
+  
   ngOnInit(): void {}
 }

@@ -11,9 +11,10 @@ import { Produto } from 'src/app/shared/models/produto.model';
 export class PedidoService {
 
   constructor(private httpClient: HttpClient) { }
-  
-  BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/pedidos'
-  
+
+  BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/pedidos/'
+  URL_CLIENTE_PEDIDOS = 'https://apiufpr2021.herokuapp.com/api/v1/pedidos/ClienteCpf/'
+
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -27,7 +28,7 @@ export class PedidoService {
   converteProdutosEmItensDoPedido(produtos: Produto[], idCliente: string): ItensDoPedido[]{
     let produtosPedido: ItensDoPedido[] = []
     produtos.forEach(produto => {
-      let item: ItensDoPedido = {idCliente:idCliente, produto:produto, quantidade:0}
+      let item: ItensDoPedido = { idCliente: idCliente, produto: produto, quantidade: 0 }
       produtosPedido.push(item)
     });
     return produtosPedido
@@ -36,6 +37,15 @@ export class PedidoService {
   listarTodosPedidos(): Observable<[]>{
     return this.httpClient.get<[]>(this.BASE_URL, this.httpOptions);
   }
+
+  listarPedidosCPF(cpf: string): Observable<Pedidos[]> {
+    return this.httpClient.get<Pedidos[]>(this.URL_CLIENTE_PEDIDOS + cpf, this.httpOptions);
+  }
+
+  listarItensPedido(idPedido: number): Observable<[]> {
+    return this.httpClient.get<[]>(this.BASE_URL + idPedido, this.httpOptions);
+  }
+
 }
 
 

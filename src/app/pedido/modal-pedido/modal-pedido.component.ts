@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { ItensDoPedido } from 'src/app/shared/models/pedidos.model';
 import { Pedidos } from 'src/app/shared/models/pedidos.model';
 import { PedidoService } from '../services/pedido.service';
 
@@ -12,12 +10,14 @@ import { PedidoService } from '../services/pedido.service';
 })
 export class ModalPedidoComponent implements OnInit {
   @Input() pedido!: Pedidos;
-  itensPedido!: ItensDoPedido[];
+  itensDoPedido!: any;
 
   constructor(public activeModal: NgbActiveModal, public pedidoService: PedidoService) { }
 
   ngOnInit(): void {
-    //Filtrar do retorno do back
-    //this.itensPedido = this.pedidoService.listarTodosProdutosPedido().filter(produtoPedido => produtoPedido.idPedido == this.pedido.idPedido);
+    this.pedidoService.listarItensPedido(this.pedido.idPedido!).subscribe((data) => {
+      this.itensDoPedido = data;
+      this.itensDoPedido = this.itensDoPedido['itensDoPedido'];
+    })
   }
 }
