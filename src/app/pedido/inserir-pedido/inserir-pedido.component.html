@@ -1,68 +1,79 @@
 <h4>Novos Pedidos</h4>
 
-<div *ngIf="message" class="alert alert-danger">
-  <div>{{message}}</div>
+<div *ngIf="message; else conteudo">
+  <div class="alert alert-warning">{{message}} <a *ngIf="link" href="{{link}}" style="margin-left: 15px; color: black; text-decoration: none;"> Voltar para Home</a></div>
+  <div class="row mt-5">
+      <div class="col-4">
+          <div class="input-group mb-3">
+              <input type="text" class="form-control" mask="CPF_CNPJ" placeholder="CPF usuário" id="cpf" name="cpf" #cpf>
+              <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="buscarCpf(cpf.value)">Buscar CPF</button>
+          </div>  
+      </div>
+  </div>
 </div>
 
-<div class="row mt-5">
+<ng-template #conteudo>
+  <div class="row mt-5">
     <div class="col-4">
         <div class="input-group mb-3">
             <input type="text" class="form-control" mask="CPF_CNPJ" placeholder="CPF usuário" id="cpf" name="cpf" #cpf>
             <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="buscarCpf(cpf.value)">Buscar CPF</button>
         </div>  
     </div>
-</div>
-
-<div *ngIf="cliente">
-  <div class="row mt-5">
-    <div class="col-8">
-      <div class="card">
-        <h5 class="card-header">Lista de Produtos</h5>
-        <div class="card-body">
-          <ul class="list-group">
-            <li *ngFor="let item of produtosPedido; let i=index;" class="list-group-item">
-              <div class="row d-flex justify-content-start align-items-center">
-                <div class="col-8 ms-5">
-                  {{item.produto?.descricao}}
-                </div>
-                <div class="col-3">
-                  <div class="row d-flex align-items-center">
-                      <i class="fas fa-minus-square" (click)="produtosPedido[i].quantidade = produtosPedido[i].quantidade! - 1" style="width: 25px; margin-right: 10px;"></i>
-                      <input type="text" class="form-control input-number text-center" style="width: 50px;" [(ngModel)]="produtosPedido[i].quantidade!">
-                      <i class="fas fa-plus-square" (click)="produtosPedido[i].quantidade = produtosPedido[i].quantidade! + 1" style="width: 25px;"></i>
+  </div>
+  <div *ngIf="cliente">
+    <div class="row mt-5">
+      <div class="col-8">
+        <div class="card">
+          <h5 class="card-header">Lista de Produtos</h5>
+          <div class="card-body">
+            <ul class="list-group">
+              <li *ngFor="let item of produtosPedido; let i=index;" class="list-group-item">
+                <div class="row d-flex justify-content-start align-items-center">
+                  <div class="col-8 ms-5">
+                    {{item.produto?.descricao}}
+                  </div>
+                  <div class="col-3">
+                    <div class="row d-flex align-items-center">
+                        <i class="fas fa-minus-square" (click)="produtosPedido[i].quantidade = produtosPedido[i].quantidade! - 1" style="width: 25px; margin-right: 10px;"></i>
+                        <input type="text" class="form-control input-number text-center" style="width: 50px;" [(ngModel)]="produtosPedido[i].quantidade!">
+                        <i class="fas fa-plus-square" (click)="produtosPedido[i].quantidade = produtosPedido[i].quantidade! + 1" style="width: 25px;"></i>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-4">
-      <div class="card">
-        <h5 class="card-header">Resumo Pedido</h5>
-        <div class="card-body">
-          <div class="row">
-           <h6>Cliente: {{cliente.nome}} {{cliente.sobreNome}}</h6>
-          </div>
-          <div class="row mb-3">
-            <h6>CPF: {{cliente.cpf}}</h6>
-          </div>
-          <h6 class="d-flex justify-content-center align-items-center" style="border-bottom: 1px solid rgb(165, 165, 165); padding-bottom: 10px;">Produtos</h6>
-          <div *ngFor="let item of produtosPedido; let i=index;" class="row d-flex justify-content-start align-items-center">
-            <div *ngIf="produtosPedido[i].quantidade! > 0">
-              <h6 class="mb-3">{{produtosPedido[i].produto?.descricao}} - {{produtosPedido[i].quantidade}}<span *ngIf="produtosPedido[i].quantidade!>1"> unidades</span><span *ngIf="produtosPedido[i].quantidade==1"> unidade</span></h6>
+      <div class="col-4">
+        <div class="card">
+          <h5 class="card-header">Resumo Pedido</h5>
+          <div class="card-body">
+            <div class="row">
+             <h6>Cliente: {{cliente.nome}} {{cliente.sobreNome}}</h6>
+            </div>
+            <div class="row mb-3">
+              <h6>CPF: {{cliente.cpf}}</h6>
+            </div>
+            <h6 class="d-flex justify-content-center align-items-center" style="border-bottom: 1px solid rgb(165, 165, 165); padding-bottom: 10px;">Produtos</h6>
+            <div *ngFor="let item of produtosPedido; let i=index;" class="row d-flex justify-content-start align-items-center">
+              <div *ngIf="produtosPedido[i].quantidade! > 0">
+                <h6 class="mb-3">{{produtosPedido[i].produto?.descricao}} - {{produtosPedido[i].quantidade}}<span *ngIf="produtosPedido[i].quantidade!>1"> unidades</span><span *ngIf="produtosPedido[i].quantidade==1"> unidade</span></h6>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card-footer">
-          <div class="row d-flex justify-content-end">
-            <div class="col-6">
-              <button type="button" class="btn btn-primary" (click)="inserirNovoPedido()">Salvar Pedido</button>
+          <div class="card-footer">
+            <div class="row d-flex justify-content-end">
+              <div class="col-6">
+                <button type="button" class="btn btn-primary" (click)="inserirNovoPedido()">Salvar Pedido</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>
+
+
