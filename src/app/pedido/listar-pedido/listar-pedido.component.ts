@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
 import { PedidoService } from '../services/pedido.service';
 import { ClienteService } from 'src/app/cliente/services/cliente.service';
 import { ModalPedidoComponent } from '../modal-pedido/modal-pedido.component';
-
 import { Pedidos } from '../../shared/models/pedidos.model';
 import { Cliente } from '../../shared/models/cliente.model';
 import { Produto } from 'src/app/shared/models/produto.model';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -28,20 +25,9 @@ export class ListarPedidoComponent implements OnInit {
   constructor(private pedidoService: PedidoService, private clienteService: ClienteService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    // this.pedidoService.listarTodosPedidos().subscribe({
-    //   next: (data: Pedidos[]) => {
-    //     if (data == null) {
-    //       this.pedido = [];
-    //     }
-    //     else {
-    //       this.pedido = data;
-    //     }
-    //   }
-    // })
   }
 
-  
-  buscarCpf(cpf: string): void {
+  buscarCpfCliente(cpf: string): void {
     this.clienteService.buscaPorCpf(cpf).subscribe((data) => {
       if (data) {
         data.forEach((x) => this.cliente = x);
@@ -54,9 +40,8 @@ export class ListarPedidoComponent implements OnInit {
     })
   }
 
-  buscarPedidosPorCliente(cpf: string): void {
-    console.log(cpf);
-    this.pedidoService.listarPedidosCPF(cpf).subscribe((data)=> {
+  buscarPedidosPorCliente(cpf: string): void {;
+    this.pedidoService.listarPedidosCPF(cpf).subscribe((data) => {
       if (data.length != 0) {
         this.clientePedido = data;
         this.message = null;
@@ -66,7 +51,7 @@ export class ListarPedidoComponent implements OnInit {
         this.clientePedido = undefined;
       }
     });
-    
+
   }
 
   verPedido(pedido: Pedidos) {
