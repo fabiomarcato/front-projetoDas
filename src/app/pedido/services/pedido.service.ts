@@ -24,7 +24,6 @@ export class PedidoService {
     return this.httpClient.post<[{}]>(this.BASE_URL, JSON.stringify(order), this.httpOptions)
   }
 
-  //alterar nome para converteProdutosEmItensDoPedido
   converteProdutosEmItensDoPedido(produtos: Produto[], idCliente: string): ItensDoPedido[]{
     let produtosPedido: ItensDoPedido[] = []
     produtos.forEach(produto => {
@@ -37,13 +36,6 @@ export class PedidoService {
   listarTodosPedidos(): Observable<[]>{
     return this.httpClient.get<[]>(this.BASE_URL, this.httpOptions);
   }
-  
-  // Back não remove pedidos
-  // remover(id:number): void {
-  //     let pedidos: Pedidos[] = this.listarTodosPedidos();
-  //     pedidos = pedidos.filter(pedido => pedido.idPedido !== id);
-  //     localStorage[LS_CHAVE_PEDIDOS] = JSON.stringify(pedidos);
-  //   }
 }
 
 

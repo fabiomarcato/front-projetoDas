@@ -9,6 +9,17 @@
   margin: 0 3px 0 15px;
 }
 
+.infos{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 60vh;
+  margin-top: 120px;
+  background-color: #f5f5f5;
+}
+
 .writing-section{
     display: flex;
     flex-direction: column;
@@ -38,8 +49,8 @@ i{
   white-space: nowrap;
   overflow: hidden;
 }
-.mgTop5{
-  margin-top: 5px;
+.mgTop15{
+  margin-top: 15px;
   }
 .mgTop25{
   margin-top: 25px;
@@ -49,27 +60,27 @@ i{
 }
 .typingAnimation {
   animation: blinkCursor 500ms steps(40) 6 normal,
-    typing 2s steps(30) 1s normal both;
+    typing 0.5s steps(30) 1s normal both;
   animation-delay: 1s;
 }
 .typingAnimationTwo {
   animation: blinkCursor 500ms steps(40) 6 normal,
-    typing-two 2s steps(30) 1s normal both;
+    typing-two 1s steps(30) 1s normal both;
   animation-delay: 4.5s;
 }
 .typingAnimationThree {
   animation: blinkCursor 500ms steps(40) 6 normal,
-    typing-three 2s steps(30) 1s normal both;
+    typing-three 1s steps(30) 1s normal both;
   animation-delay: 8s;
 }
 .typingAnimationFour {
   animation: blinkCursor 500ms steps(40) 4 normal,
-    typing-four 0.6s steps(30) 1s normal both;
+    typing-four 1s steps(30) 1s normal both;
   animation-delay: 11.5s;
 }
 .typingAnimationFive {
   animation: blinkCursor 500ms steps(40) 5 normal,
-    typing-five 0.7s steps(30) 1s normal both;
+    typing-five 1s steps(30) 1s normal both;
   animation-delay: 13.5s;
 }
 .typingAnimationSix {
@@ -78,16 +89,31 @@ i{
   animation-delay: 16s;
 }
 .typingAnimationSeven {
-  animation: blinkCursor 500ms steps(40) 8 normal,
+  animation: blinkCursor 500ms steps(40) 4 normal,
     typing-seven 0.6s steps(30) 1s normal both;
   animation-delay: 18.5s;
+}
+.typingAnimationEight {
+  animation: blinkCursor 500ms steps(40) 5 normal,
+    typing-eight 0.6s steps(30) 1s normal both;
+  animation-delay: 20.5s;
+}
+.typingAnimationNine {
+  animation: blinkCursor 500ms steps(40) 4 normal,
+    typing-nine 0.6s steps(30) 1s normal both;
+  animation-delay: 22.5s;
+}
+.typingAnimationTen {
+  animation: blinkCursor 500ms steps(40) 5 normal,
+    typing-ten 0.6s steps(30) 1s normal both;
+  animation-delay: 24.5s;
 }
 @keyframes typing {
   from {
     width: 0;
   }
   to {
-    width: 13em;
+    width: 4em;
   }
 }
 @keyframes typing-two {
@@ -95,7 +121,7 @@ i{
     width: 0;
   }
   to {
-    width: 15em;
+    width: 12em;
   }
 }
 @keyframes typing-three {
@@ -103,7 +129,7 @@ i{
     width: 0;
   }
   to {
-    width: 17em;
+    width: 10em;
   }
 }
 @keyframes typing-four {
@@ -111,7 +137,7 @@ i{
     width: 0;
   }
   to {
-    width: 6.5em;
+    width: 15em;
   }
 }
 @keyframes typing-five {
@@ -119,7 +145,7 @@ i{
     width: 0;
   }
   to {
-    width: 7.8em;
+    width: 13em;
   }
 }
 @keyframes typing-six {
@@ -127,7 +153,7 @@ i{
     width: 0;
   }
   to {
-    width: 7em;
+    width: 6.5em;
   }
 }
 @keyframes typing-seven {
@@ -136,6 +162,30 @@ i{
   }
   to {
     width: 7em;
+  }
+}
+@keyframes typing-eight {
+  from {
+    width: 0;
+  }
+  to {
+    width: 6.5em;
+  }
+}
+@keyframes typing-nine {
+  from {
+    width: 0;
+  }
+  to {
+    width: 6.5em;
+  }
+}
+@keyframes typing-ten {
+  from {
+    width: 0;
+  }
+  to {
+    width: 10em;
   }
 }
 @keyframes blinkCursor {
