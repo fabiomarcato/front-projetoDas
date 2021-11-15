@@ -10,8 +10,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./inserir-produto.component.css']
 })
 export class InserirProdutoComponent implements OnInit {
-  @ViewChild('formProduto') formProduto! : NgForm;
-  produto! : Produto;
+  @ViewChild('formProduto') formProduto!: NgForm;
+  produto!: Produto;
 
   constructor(
     private produtoService: ProdutoService,
@@ -22,16 +22,16 @@ export class InserirProdutoComponent implements OnInit {
     this.produto = new Produto();
   }
 
-  inserir(): void{
-    if(this.formProduto.form.valid) {
+  inserir(): void {
+    if (this.formProduto.form.valid) {
       this.produtoService.inserir(this.produto).subscribe({
         complete: () => document.location.reload()
       });
     }
   }
 
-  closeModal(){
+  fecharModal() {
     this.activeModal.dismiss();
     document.location.reload();
-}
+  }
 }

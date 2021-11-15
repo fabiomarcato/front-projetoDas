@@ -59,7 +59,6 @@ export class ListarPedidoComponent implements OnInit {
     this.pedidoService.listarPedidosCPF(cpf).subscribe((data)=> {
       if (data.length != 0) {
         this.clientePedido = data;
-        console.log(this.clientePedido)
         this.message = null;
       }
       else {

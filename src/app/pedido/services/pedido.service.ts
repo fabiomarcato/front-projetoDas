@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ItensDoPedido, Pedidos } from '../../shared/models/pedidos.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Produto } from 'src/app/shared/models/produto.model';
 
 
@@ -43,8 +43,8 @@ export class PedidoService {
     return this.httpClient.get<Pedidos[]>(this.URL_CLIENTE_PEDIDOS + cpf, this.httpOptions);
   }
 
-  listarItensPedido(idPedido: number): Observable<Pedidos[]> {
-    return this.httpClient.get<Pedidos[]>(this.BASE_URL + idPedido, this.httpOptions);
+  listarItensPedido(idPedido: number): Observable<[]> {
+    return this.httpClient.get<[]>(this.BASE_URL + idPedido, this.httpOptions);
   }
 
 }

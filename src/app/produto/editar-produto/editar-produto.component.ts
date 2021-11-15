@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProdutoService } from '../services/produto.service';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -15,17 +14,10 @@ export class EditarProdutoComponent implements OnInit {
 
   constructor(
     private produtoService: ProdutoService,
-    private route: ActivatedRoute,
     public activeModal: NgbActiveModal
   ) { }
 
   ngOnInit(): void {
-    let id = +this.route.snapshot.params['id'];
-    const res = this.produtoService.buscarPorID(id);
-    if (res !== undefined) {
-    } else {
-      throw new Error("Produto não encontrado: id = " + id);
-    }
   }
 
   atualizar(): void {
@@ -38,7 +30,7 @@ export class EditarProdutoComponent implements OnInit {
     }
   }
 
-  closeModal() {
+  fecharModal() {
     this.activeModal.dismiss();
     document.location.reload();
   }

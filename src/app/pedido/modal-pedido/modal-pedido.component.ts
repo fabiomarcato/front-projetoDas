@@ -12,15 +12,16 @@ import { PedidoService } from '../services/pedido.service';
 })
 export class ModalPedidoComponent implements OnInit {
   @Input() pedido!: Pedidos;
-  itensDoPedido!: Pedidos[];
+  itensDoPedido!: any;
 
 
-  constructor(public activeModal: NgbActiveModal, public pedidoService: PedidoService) { }
+
+  constructor(public activeModal: NgbActiveModal, public pedidoService: PedidoService) {}
 
   ngOnInit(): void {
     this.pedidoService.listarItensPedido(this.pedido.idPedido!).subscribe((data) => {
-      this.itensDoPedido = data;
-      console.log(this.itensDoPedido);
-    });
+        this.itensDoPedido = data;
+        this.itensDoPedido = this.itensDoPedido['itensDoPedido'];
+    })
   }
 }
