@@ -5,6 +5,7 @@ import { ModalClienteComponent } from '../modal-cliente/modal-cliente.component'
 import { ClienteService } from '../services/cliente.service';
 import { Router } from '@angular/router';
 import { EditarClienteComponent } from '../editar-cliente/editar-cliente.component';
+import { InserirClienteComponent } from '../inserir-cliente/inserir-cliente.component';
 
 @Component({
   selector: 'app-listar-cliente',
@@ -17,9 +18,11 @@ export class ListarClienteComponent implements OnInit {
   constructor(private clienteService: ClienteService, private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
-    //this.clientes = this.listarTodos();
+    this.listarTodos();
+  }
 
-    this.clienteService.listarTodos().subscribe({
+  listarTodos() {
+    return this.clienteService.listarTodos().subscribe({
       next: (data: Cliente[]) => {
         if (data == null) {
           this.clientes = [];
@@ -28,27 +31,15 @@ export class ListarClienteComponent implements OnInit {
           this.clientes = data;
         }
       }
-    })
-  }
-
-  listarTodos() {
-    return this.clienteService.listarTodos();
+    });
   }
 
   remover($event: any, cliente: Cliente): void {
     $event.preventDefault();
     if (confirm('Deseja realmente remover o cliente "' + cliente.nome + '"?')) {
-      this.clienteService.remover(cliente.id!).subscribe(
-        // chamada bem sucedida
-        data => {
-          //console.log(data);
-          document.location.reload();
-        },
-        // Leitura do erro
-        err => {
-          //console.log(err.error);
-        }
-      );
+      this.clienteService.remover(cliente.id!).subscribe({
+        complete: () => document.location.reload()
+      });
     }
   }
 
@@ -60,6 +51,10 @@ export class ListarClienteComponent implements OnInit {
   abrirModalEditar(cliente: Cliente) {
     const modalRef = this.modalService.open(EditarClienteComponent);
     modalRef.componentInstance.cliente = cliente;
+  }
+
+  abrirModalNovo() {
+    return this.modalService.open(InserirClienteComponent);
   }
 
 }

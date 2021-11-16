@@ -25,8 +25,15 @@ export class ListarProdutoComponent implements OnInit {
   }
 
   listarTodos() {
-    return this.produtoService.listarTodos().subscribe((data) => {
-      this.produtos = data;
+    return this.produtoService.listarTodos().subscribe({
+      next: (data: Produto[]) => {
+        if (data == null) {
+          this.produtos = [];
+        }
+        else {
+          this.produtos = data;
+        }
+      }
     });
   }
 
