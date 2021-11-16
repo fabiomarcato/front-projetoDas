@@ -4,6 +4,7 @@ import { Cliente } from 'src/app/shared/models/cliente.model';
 import { ModalClienteComponent } from '../modal-cliente/modal-cliente.component';
 import { ClienteService } from '../services/cliente.service';
 import { Router } from '@angular/router';
+import { EditarClienteComponent } from '../editar-cliente/editar-cliente.component';
 
 @Component({
   selector: 'app-listar-cliente',
@@ -34,26 +35,30 @@ export class ListarClienteComponent implements OnInit {
     return this.clienteService.listarTodos();
   }
 
-
   remover($event: any, cliente: Cliente): void {
     $event.preventDefault();
     if (confirm('Deseja realmente remover o cliente "' + cliente.nome + '"?')) {
       this.clienteService.remover(cliente.id!).subscribe(
         // chamada bem sucedida
         data => {
-          console.log(data);
+          //console.log(data);
+          document.location.reload();
         },
         // Leitura do erro
         err => {
-          console.log(err.error);
+          //console.log(err.error);
         }
       );
-      this.router.navigate(['/clientes']);
     }
   }
 
   abrirModalCliente(cliente: Cliente) {
     const modalRef = this.modalService.open(ModalClienteComponent);
+    modalRef.componentInstance.cliente = cliente;
+  }
+
+  abrirModalEditar(cliente: Cliente) {
+    const modalRef = this.modalService.open(EditarClienteComponent);
     modalRef.componentInstance.cliente = cliente;
   }
 

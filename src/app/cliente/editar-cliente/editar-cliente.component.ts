@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cliente } from 'src/app/shared/models/cliente.model';
 import { ClienteService } from '../services/cliente.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-editar-cliente',
@@ -12,7 +13,7 @@ import { ClienteService } from '../services/cliente.service';
 export class EditarClienteComponent implements OnInit {
   // Recebe uma referência do formulário aqui no componente
   // 'formCliente' deve ser o nome do formulário no HTML
-  @ViewChild('formCliente') formCliente!: NgForm;  
+  @ViewChild('formCliente') formCliente!: NgForm;
 
   // Atributo de binding, os dados digitados no formulário vêm para este atributo
   cliente!: Cliente;
@@ -23,7 +24,7 @@ export class EditarClienteComponent implements OnInit {
   constructor(
     private clienteService: ClienteService,
     private route: ActivatedRoute,
-    private router: Router,
+    public activeModal: NgbActiveModal
   ) { }
 
   ngOnInit(): void {
@@ -31,17 +32,7 @@ export class EditarClienteComponent implements OnInit {
     // Operador + (antes do this) converte para número
     let id = +this.route.snapshot.params['id'];
     // Com o id, obtém a pessoa
-    const res = this.clienteService.buscarPorID(id).subscribe(
-      // chamada bem sucedida
-      data => {
-        console.log(data);
-        this.cliente = data
-      },
-      // Leitura do erro
-      err => {
-        console.log(err.error);
-      },
-    );
+    const res = this.clienteService.buscarPorID(id);
     if (res !== undefined) { }
     else throw new Error('Cliente não econtrado: id = ' + id);
   }
@@ -53,14 +44,19 @@ export class EditarClienteComponent implements OnInit {
         .subscribe(
           // chamada bem sucedida
           data => {
-            console.log(data);
+            //console.log(data);
+            document.location.reload();
           },
           // Leitura do erro
           err => {
-            console.log(err.error);
+            //console.log(err.error);
           }
         );
-      this.router.navigate(['/clientes']);
     }
+  }
+
+  closeModal() {
+    this.activeModal.dismiss();
+    document.location.reload();
   }
 }

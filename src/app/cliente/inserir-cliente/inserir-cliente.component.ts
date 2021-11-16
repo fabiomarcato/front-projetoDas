@@ -38,15 +38,11 @@ export class InserirClienteComponent implements OnInit {
       .subscribe(
         // chamada bem sucedida
         data => {
-          console.log(data);
+          //console.log(data);
         },
         // Leitura do erro
         err => {
-          console.log(this.cliente.cpf);
-          console.log(this.cliente.nome);
-          console.log(this.cliente.sobreNome);
-          console.log(this.cliente.id);
-          console.log(err.error);
+          //console.log(err.error);
         }
       );
       this.router.navigate(['/clientes']);

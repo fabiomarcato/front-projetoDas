@@ -31,7 +31,7 @@ export class ClienteService {
   }
 
   buscarPorID(id: number): Observable<Cliente> {
-    return this.httpClient.get<Cliente>(this.BASE_URL + id);
+    return this.httpClient.get<Cliente>(this.BASE_URL + id, this.httpOptions);
   }
 
   buscaPorCpf(cpf: string): Observable<[]> {
@@ -39,7 +39,7 @@ export class ClienteService {
   }
 
   atualizar(cliente: Cliente): Observable<Cliente[]> {
-    return this.httpClient.put<Cliente[]>(this.BASE_URL + cliente.id, JSON.stringify(cliente));
+    return this.httpClient.put<Cliente[]>(this.BASE_URL + cliente.id, JSON.stringify(cliente), this.httpOptions);
   }
 
   remover(id: number): Observable<Cliente> {
