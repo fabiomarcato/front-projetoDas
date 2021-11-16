@@ -19,9 +19,8 @@
       <td class="text-center" style="width: 300px">
         <button type="button" class="btn btn-xs btn-info" (click)="abrirModalCliente(cliente)">
           <i class="fa fa-eye" aria-hidden="true"></i> Ver </button>
-        <a [routerLink]="['/clientes/editar', cliente.id]" href="#" title="Editar" alt="Editar"
-          class="btn btn-xs btn-info"> <i class="fa fa-edit" aria-hidden="true"></i> Editar
-        </a>
+        <button type="button" class="btn btn-xs btn-info" (click)="abrirModalEditar(cliente)">
+          <i class="fa fa-edit" aria-hidden="true"></i> Editar </button>
         <a href="#" title="Remover" alt="Remover" class="btn btn-xs btn-danger" (click)="remover($event, cliente)">
           <i class="fa fa-times" aria-hidden="true"></i> Remover </a>
       </td>
