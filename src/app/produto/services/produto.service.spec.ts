@@ -7,25 +7,23 @@ let httpTestingController: HttpTestingController;
 let produtoService: ProdutoService;
 const BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/produtos/'
 
-beforeEach(() => {
-  TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule],
-  });
-  produtoService = TestBed.inject(ProdutoService);
-  httpTestingController = TestBed.get(HttpTestingController);
-});
-
-afterEach(() => {
-  httpTestingController.verify();
-});
 
 describe('Serviço de produtos', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+    });
+    produtoService = TestBed.inject(ProdutoService);
+    httpTestingController = TestBed.get(HttpTestingController);
+  });
+  
+  afterEach(() => {
+    httpTestingController.verify();
+  });
+
   it('Serviço de produtos é criado', () => {
     expect(produtoService).toBeTruthy();
   });
-});
-
-describe('Listagem de produtos (GET)', () => {
   it('Deve retornar uma lista com 0 produtos', () => {
     const mockProdutos: Produto[] = [];
     produtoService.listarTodos().subscribe((produtos: Produto[]) => {
@@ -35,7 +33,7 @@ describe('Listagem de produtos (GET)', () => {
     expect(req.request.method).toEqual('GET');
     req.flush(mockProdutos);
   });
-
+  
   it('Deve retornar uma lista com 1 produto', () => {
     const mockProdutos: Produto[] = [
       {
@@ -51,7 +49,7 @@ describe('Listagem de produtos (GET)', () => {
     const req = httpTestingController.expectOne(BASE_URL);
     req.flush(mockProdutos);
   });
-
+  
   it('Deve retornar uma lista com 2 produtos', () => {
     const mockProdutos: Produto[] = [
       {
@@ -74,7 +72,7 @@ describe('Listagem de produtos (GET)', () => {
     expect(req.request.method).toEqual('GET');
     req.flush(mockProdutos);
   });
-
+  
   it('Deve retornar uma lista com vários produtos', () => {
     const mockProdutos: Produto[] = [
       {
@@ -133,17 +131,13 @@ describe('Listagem de produtos (GET)', () => {
     expect(req.request.method).toEqual('GET');
     req.flush(mockProdutos);
   });
-});
 
-describe('Busca de produtos (GET)', () => {
   it('Deve fazer um get request', () => {
     produtoService.buscarPorID(1).subscribe();
     const req = httpTestingController.expectOne(BASE_URL + '1');
     expect(req.request.method).toEqual('GET');
   });
-});
 
-describe('Deve inserir produtos (POST)', () => {
   it('Deve inserir 1 produto na lista vazia', () => {
     const novoProduto: Produto =
     {
@@ -191,9 +185,7 @@ describe('Deve inserir produtos (POST)', () => {
     expect(req.request.method).toEqual('POST');
     req.flush(novoProduto);
   });
-});
 
-describe('Deve editar produtos (PUT)', () => {
   it('Deve editar a descrição de um produto', () => {
     const produtoEditado: Produto =
     {
@@ -238,13 +230,8 @@ describe('Deve editar produtos (PUT)', () => {
     req = httpTestingController.expectOne(BASE_URL + produtoEditado.id);
     expect(req.request.method).toEqual('PUT');
     req.flush(produtoEditado);
-
-
   });
 
-});
-
-describe('Deve remover produtos (DELETE)', () => {
   it('Deve remover um produto', () => {
     const produtoRemovido: Produto =
     {
@@ -290,4 +277,7 @@ describe('Deve remover produtos (DELETE)', () => {
     expect(req.request.method).toEqual('DELETE');
     req.flush(produtoRemovido);
   });
+
 });
+
+
