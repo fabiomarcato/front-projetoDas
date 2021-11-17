@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 import { Cliente } from 'src/app/shared/models/cliente.model';
 
 // Chave para acesso ao LocalStorage
