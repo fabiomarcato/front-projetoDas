@@ -17,14 +17,10 @@ const routes: Routes = [
   { path: 'clientes/listar', component: ListarClienteComponent },
   { path: 'clientes/novo', component: InserirClienteComponent },
   { path: 'clientes/editar/:id', component: EditarClienteComponent },
-  
   { path: 'pedidos/inserir', component: InserirPedidoComponent},
   { path: 'produtos/listar', component: ListarProdutoComponent },
   { path: 'pedidos/listar', component: ListarPedidoComponent }
-
 ];
-
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],

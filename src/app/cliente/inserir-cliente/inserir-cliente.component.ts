@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Cliente } from 'src/app/shared/models/cliente.model';
 import { ClienteService } from '../services/cliente.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-inserir-cliente',
@@ -20,13 +21,11 @@ export class InserirClienteComponent implements OnInit {
   // Deve-se injetar no construtor:
   // - service, para efetuar a operação
   // - Router, para redirecionar para a tela de listagem depois da inserção
-  constructor(private clienteService: ClienteService, private router: Router) { }
+  constructor(private clienteService: ClienteService, private router: Router, private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
     this.cliente = new Cliente();
-    this.cliente.id = 0;
   }
-
   // Para inserir:
   // - Verifica se o formulário é válido, se não deu nenhum erro
   // Se OK:
@@ -35,17 +34,14 @@ export class InserirClienteComponent implements OnInit {
   inserir() {
     if (this.formCliente.form.valid) {
       this.clienteService.inserir(this.cliente)
-      .subscribe(
-        // chamada bem sucedida
-        data => {
-          //console.log(data);
-        },
-        // Leitura do erro
-        err => {
-          //console.log(err.error);
-        }
-      );
-      this.router.navigate(['/clientes']);
+        .subscribe({
+            complete: () => document.location.reload()
+          });
     }
+  }
+
+  fecharModal() {
+    this.activeModal.dismiss();
+    document.location.reload();
   }
 }

@@ -1,5 +1,9 @@
-<h1>Novo Cliente</h1>
-<div class="well">
+<div class="modal-header">
+  <h4>Novo Cliente</h4>
+</div>
+
+
+<div class="modal-body">
   <form #formCliente="ngForm">
     <div class="form-group">
       <label for="cpf">CPF:</label>
@@ -28,10 +32,13 @@
         <div [hidden]="!sobrenome.errors?.required"> Digite o sobrenome do Cliente </div>
         <div [hidden]="!sobrenome.errors?.minlength"> O nome deve conter ao menos 2 caracteres. </div>
       </div>
-      <button type="button" class="btn btn-primary" (click)="inserir()" [disabled]="!formCliente.form.valid">
-        <i class="fa fa-save" aria-hidden="true"></i> Salvar </button>
-      <a class="btn btn-secondary" [routerLink]="['/clientes']">
-        <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar </a>
     </div>
   </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="inserir()" [disabled]="!formCliente.form.valid">
+    <i class="fa fa-save" aria-hidden="true"></i> Salvar </button>
+  <a class="btn btn-secondary" (click)="fecharModal()">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar </a>
 </div>

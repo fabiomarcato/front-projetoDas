@@ -23,11 +23,10 @@ export class ProdutoService {
 
   inserir(produto: Produto): Observable<Produto> {
     return this.httpClient.post<Produto>(this.BASE_URL, JSON.stringify(produto), this.httpOptions);
-
   }
 
-  atualizar(produto: Produto): Observable<Produto[]> {
-    return this.httpClient.put<Produto[]>(this.BASE_URL + produto.id, JSON.stringify(produto), this.httpOptions);
+  atualizar(produto: Produto): Observable<Produto> {
+    return this.httpClient.put<Produto>(this.BASE_URL + produto.id, JSON.stringify(produto), this.httpOptions);
   }
 
   buscarPorID(id: number): Observable<Produto> {

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Cliente } from 'src/app/shared/models/cliente.model';
 import { ClienteService } from '../services/cliente.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -23,39 +22,22 @@ export class EditarClienteComponent implements OnInit {
   //router: para fazer o redirecionamento, após a edição
   constructor(
     private clienteService: ClienteService,
-    private route: ActivatedRoute,
     public activeModal: NgbActiveModal
   ) { }
 
   ngOnInit(): void {
-    // snapshot.params de ActivatedRoute dá acesso aos parâmetros passados
-    // Operador + (antes do this) converte para número
-    let id = +this.route.snapshot.params['id'];
-    // Com o id, obtém a pessoa
-    const res = this.clienteService.buscarPorID(id);
-    if (res !== undefined) { }
-    else throw new Error('Cliente não econtrado: id = ' + id);
   }
 
   atualizar() {
-    // Verifica se o formulário é válido
     if (this.formCliente.form.valid) {
       this.clienteService.atualizar(this.cliente)
-        .subscribe(
-          // chamada bem sucedida
-          data => {
-            //console.log(data);
-            document.location.reload();
-          },
-          // Leitura do erro
-          err => {
-            //console.log(err.error);
-          }
-        );
+        .subscribe({
+          complete: () => document.location.reload()
+        });
     }
   }
 
-  closeModal() {
+  fecharModal() {
     this.activeModal.dismiss();
     document.location.reload();
   }

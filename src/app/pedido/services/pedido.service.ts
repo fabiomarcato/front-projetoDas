@@ -21,7 +21,7 @@ export class PedidoService {
     })
   }
 
-  inserirPedido(order: {}): Observable<{}>{
+  inserirPedido(order: {}): Observable<{}> {
     return this.httpClient.post<[{}]>(this.BASE_URL, JSON.stringify(order), this.httpOptions)
   }
 
