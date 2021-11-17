@@ -34,10 +34,6 @@ export class PedidoService {
     return produtosPedido
   }
 
-  listarTodosPedidos(): Observable<[]>{
-    return this.httpClient.get<[]>(this.BASE_URL, this.httpOptions);
-  } //Remover função?
-
   listarPedidosCPF(cpf: string): Observable<Pedidos[]> {
     return this.httpClient.get<Pedidos[]>(this.URL_CLIENTE_PEDIDOS + cpf, this.httpOptions);
   }
