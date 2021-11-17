@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { ProdutoService } from '../services/produto.service';
 import { Produto } from 'src/app/shared/models/produto.model';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { EMPTY } from 'rxjs';
 
 let httpTestingController: HttpTestingController;
 let produtoService: ProdutoService;
@@ -48,7 +47,7 @@ describe('Listagem de produtos (GET)', () => {
       expect(produtos.length).toEqual(1);
       expect(produtos[0].descricao).toEqual('Caderno');
       expect(produtos[0].id).toEqual(1);
-    })
+    });
     const req = httpTestingController.expectOne(BASE_URL);
     req.flush(mockProdutos);
   });
@@ -196,11 +195,11 @@ describe('Deve inserir produtos (POST)', () => {
 
 describe('Deve editar produtos (PUT)', () => {
   it('Deve editar a descrição de um produto', () => {
-    const produtoEditado: Produto = 
-      {
-        "descricao": "Caderno de 10 matérias",
-        "id": 1
-      }
+    const produtoEditado: Produto =
+    {
+      "descricao": "Caderno de 10 matérias",
+      "id": 1
+    }
 
     produtoService.atualizar(produtoEditado).subscribe((produto) => {
       expect(produto.descricao).toEqual('Caderno de 10 matérias');
@@ -212,11 +211,11 @@ describe('Deve editar produtos (PUT)', () => {
   });
 
   it('Deve editar a descrição de um produto após o outro', () => {
-    let produtoEditado: Produto = 
-      {
-        "descricao": "Caderno de 100 matérias",
-        "id": 1
-      }
+    let produtoEditado: Produto =
+    {
+      "descricao": "Caderno de 100 matérias",
+      "id": 1
+    }
 
     produtoService.atualizar(produtoEditado).subscribe((produto) => {
       expect(produto.descricao).toEqual('Caderno de 100 matérias');
@@ -226,11 +225,11 @@ describe('Deve editar produtos (PUT)', () => {
     expect(req.request.method).toEqual('PUT');
     req.flush(produtoEditado);
 
-    produtoEditado = 
-      {
-        "descricao": "Caderno de 5 matérias",
-        "id": 2
-      }
+    produtoEditado =
+    {
+      "descricao": "Caderno de 5 matérias",
+      "id": 2
+    }
 
     produtoService.atualizar(produtoEditado).subscribe((produto) => {
       expect(produto.descricao).toEqual('Caderno de 5 matérias');
@@ -242,6 +241,53 @@ describe('Deve editar produtos (PUT)', () => {
 
 
   });
+
 });
 
+describe('Deve remover produtos (DELETE)', () => {
+  it('Deve remover um produto', () => {
+    const produtoRemovido: Produto =
+    {
+      "descricao": "Caderno de 10 matérias",
+      "id": 1
+    }
 
+    produtoService.remover(produtoRemovido.id!).subscribe((produto) => {
+      expect(produto).toBeNull;
+
+    });
+    const req = httpTestingController.expectOne(BASE_URL + produtoRemovido.id);
+    expect(req.request.method).toEqual('DELETE');
+    req.flush(produtoRemovido);
+  });
+
+  it('Deve remover um produto após o outro', () => {
+    let produtoRemovido: Produto =
+    {
+      "descricao": "Apontador de lápis",
+      "id": 189
+    }
+
+    produtoService.remover(produtoRemovido.id!).subscribe((produto) => {
+      expect(produto).toBeNull;
+
+    });
+    let req = httpTestingController.expectOne(BASE_URL + produtoRemovido.id);
+    expect(req.request.method).toEqual('DELETE');
+    req.flush(produtoRemovido);
+
+    produtoRemovido =
+    {
+      "descricao": "Hidrocor",
+      "id": 256
+    }
+
+    produtoService.remover(produtoRemovido.id!).subscribe((produto) => {
+      expect(produto).toBeNull;
+
+    });
+    req = httpTestingController.expectOne(BASE_URL + produtoRemovido.id);
+    expect(req.request.method).toEqual('DELETE');
+    req.flush(produtoRemovido);
+  });
+});
