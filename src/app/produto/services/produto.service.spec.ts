@@ -132,12 +132,6 @@ describe('Serviço de produtos', () => {
     req.flush(mockProdutos);
   });
 
-  it('Deve fazer um get request', () => {
-    produtoService.buscarPorID(1).subscribe();
-    const req = httpTestingController.expectOne(BASE_URL + '1');
-    expect(req.request.method).toEqual('GET');
-  });
-
   it('Deve inserir 1 produto na lista vazia', () => {
     const novoProduto: Produto =
     {

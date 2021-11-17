@@ -29,10 +29,6 @@ export class ProdutoService {
     return this.httpClient.put<Produto>(this.BASE_URL + produto.id, JSON.stringify(produto), this.httpOptions);
   }
 
-  buscarPorID(id: number): Observable<Produto> {
-    return this.httpClient.get<Produto>(this.BASE_URL + id, this.httpOptions);
-  }
-
   remover(id: number): Observable<number> {
     return this.httpClient.delete<number>(this.BASE_URL + id, this.httpOptions);
   }

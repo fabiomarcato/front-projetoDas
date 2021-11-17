@@ -38,6 +38,7 @@ export class ListarClienteComponent implements OnInit {
     $event.preventDefault();
     if (confirm('Deseja realmente remover o cliente "' + cliente.nome + '"?')) {
       this.clienteService.remover(cliente.id!).subscribe({
+        error: (err) => alert(err.error.Erro),
         complete: () => document.location.reload()
       });
     }

@@ -39,16 +39,11 @@ export class ListarProdutoComponent implements OnInit {
 
   remover($event: any, produto: Produto): void {
     $event.preventDefault();
-    this.checarProdutosEmPedido(produto)
-    if (this.aux == false) {
       if (confirm('Deseja realmente remover o produto "' + produto.descricao + '"?'))
         this.produtoService.remover(produto.id!).subscribe({
+          error: (err) => alert(err.error.Erro),
           complete: () => document.location.reload()
         });
-
-    } else {
-      confirm('O produdo: "' + produto.descricao + '" está vinculado a um pedido e não pode ser removido')
-    }
   }
 
   editarProduto(produto: Produto) {
@@ -58,25 +53,6 @@ export class ListarProdutoComponent implements OnInit {
 
   novoProduto() {
     return this.modalService.open(InserirProdutoComponent);
-  }
-
-  checarProdutosEmPedido(produto: Produto) {
-    let produtosPedido: any;
-    let itensPedido: any = [];
-    this.pedidoService.listarTodosPedidos().subscribe({
-      next: (data) => {
-        produtosPedido = data;
-        this.aux = false;
-        for (let i = 0; i < produtosPedido.length; i++) {
-          itensPedido = produtosPedido[i]['itensDoPedido'];
-          for (let j = 0; j < itensPedido.length; j++) {
-            if (produto.id === itensPedido[j]['produto']['id']) {
-              this.aux = true;
-            }
-          }
-        }
-      }
-    })
   }
 }
 

@@ -9,8 +9,6 @@
       <label for="cpf">CPF:</label>
       <input type="text" class="form-control" mask="CPF_CNPJ" id="cpf" name="cpf" [(ngModel)]='cliente.cpf'
         #cpf="ngModel" required>
-      <!-- ngModel - se o usuário alterar na tela, automaticamente altera no componente e vice versa -->
-      <!-- #cpf="ngModel - Criar uma variável "cpf" para usar no HTML (ex. verificar erros) -->
       <div *ngIf="cpf.errors && (cpf.dirty || cpf.touched)" class="alert alert-danger">
         <div [hidden]="!cpf.errors?.required"> Digite o CPF do Cliente. </div>
       </div>
