@@ -35,8 +35,8 @@ export class InserirClienteComponent implements OnInit {
     if (this.formCliente.form.valid) {
       this.clienteService.inserir(this.cliente)
         .subscribe({
-            complete: () => document.location.reload()
-          });
+          complete: () => document.location.reload()
+        });
     }
   }
 
