@@ -6,6 +6,8 @@ describe('PedidoService', () => {
   let service: PedidoService;
   let httpTestingController: HttpTestingController;
 
+  const BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/pedidos/'
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -43,7 +45,7 @@ describe('PedidoService', () => {
     });
   
     const requisicao = httpTestingController.expectOne(
-      'https://apiufpr2021.herokuapp.com/api/v1/pedidos/',
+      BASE_URL,
     );
     expect(requisicao.request.method).toEqual('POST');
     requisicao.flush(mockPedido);
@@ -135,7 +137,7 @@ describe('PedidoService', () => {
       expect(data).toEqual(mockPedidos);
     })
     const requisicao = httpTestingController.expectOne(
-      `https://apiufpr2021.herokuapp.com/api/v1/pedidos/ClienteCpf/${cpf}`,
+      `${BASE_URL}ClienteCpf/${cpf}`,
     )
     expect(requisicao.request.method).toEqual('GET')
     requisicao.flush(mockPedidos)
@@ -168,7 +170,7 @@ describe('PedidoService', () => {
       expect(data).toEqual(mockItens);
     })
     const requisicao = httpTestingController.expectOne(
-      `https://apiufpr2021.herokuapp.com/api/v1/pedidos/${idPedido}`,
+      `${BASE_URL}${idPedido}`,
     )
     expect(requisicao.request.method).toEqual('GET')
     requisicao.flush(mockItens)

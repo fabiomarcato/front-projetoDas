@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Produto } from 'src/app/shared/models/produto.model';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -13,8 +12,7 @@ export class PedidoService {
   constructor(private httpClient: HttpClient) { }
 
   BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/pedidos/'
-  URL_CLIENTE_PEDIDOS = 'https://apiufpr2021.herokuapp.com/api/v1/pedidos/ClienteCpf/'
-
+  
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -35,7 +33,7 @@ export class PedidoService {
   }
 
   listarPedidosCPF(cpf: string): Observable<Pedidos[]> {
-    return this.httpClient.get<Pedidos[]>(this.URL_CLIENTE_PEDIDOS + cpf, this.httpOptions);
+    return this.httpClient.get<Pedidos[]>(`${this.BASE_URL}ClienteCpf/${cpf}`, this.httpOptions);
   }
 
   listarItensPedido(idPedido: number): Observable<{}> {

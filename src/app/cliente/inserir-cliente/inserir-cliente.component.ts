@@ -22,6 +22,7 @@ export class InserirClienteComponent implements OnInit {
 
   inserir() {
     if (this.formCliente.form.valid) {
+      this.inserirMascaraCpf(this.cliente.cpf!);
       this.clienteService.inserir(this.cliente).subscribe({
           error: (erro) => this.mostrarErro(erro),
           complete: () => document.location.reload()
@@ -29,12 +30,20 @@ export class InserirClienteComponent implements OnInit {
     }
   }
 
+  inserirMascaraCpf(cpf: string) {
+    this.cliente.cpf = cpf.replace(/\D/g, '')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1-$2')
+      .replace(/(-\d{2})\d+?$/, '$1')
+  }
+  
+  mostrarErro(erro: { error: { Erro: any; }; }){
+    alert(erro.error.Erro)
+  }
+
   fecharModal() {
     this.activeModal.dismiss();
     document.location.reload();
-  }
-
-  mostrarErro(erro: { error: { Erro: any; }; }){
-    alert(erro.error.Erro)
   }
 }

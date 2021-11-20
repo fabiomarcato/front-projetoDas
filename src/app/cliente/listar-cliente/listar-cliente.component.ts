@@ -3,7 +3,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Cliente } from 'src/app/shared/models/cliente.model';
 import { ModalClienteComponent } from '../modal-cliente/modal-cliente.component';
 import { ClienteService } from '../services/cliente.service';
-import { Router } from '@angular/router';
 import { EditarClienteComponent } from '../editar-cliente/editar-cliente.component';
 import { InserirClienteComponent } from '../inserir-cliente/inserir-cliente.component';
 
@@ -15,7 +14,7 @@ import { InserirClienteComponent } from '../inserir-cliente/inserir-cliente.comp
 export class ListarClienteComponent implements OnInit {
   clientes: Cliente[] = [];
 
-  constructor(private clienteService: ClienteService, private modalService: NgbModal, private router: Router) { }
+  constructor(private clienteService: ClienteService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.listarTodos();
@@ -23,25 +22,30 @@ export class ListarClienteComponent implements OnInit {
 
   listarTodos() {
     return this.clienteService.listarTodos().subscribe({
-      next: (data: Cliente[]) => {
-        if (data == null) {
+      next: (clientes: Cliente[]) => {
+        if (clientes == null) {
           this.clientes = [];
         }
         else {
-          this.clientes = data;
+          this.clientes = clientes;
         }
       }
     });
   }
 
-  remover($event: any, cliente: Cliente): void {
+  remover($event: any, cliente: Cliente) {
     $event.preventDefault();
-    if (confirm('Deseja realmente remover o cliente "' + cliente.nome + '"?')) {
+    if (this.confirmaRemoverCliente(cliente)) {
       this.clienteService.remover(cliente.id!).subscribe({
         error: (err) => alert(err.error.Erro),
         complete: () => document.location.reload()
       });
     }
+  }
+
+  confirmaRemoverCliente(cliente: Cliente){
+    let confirmaRemocaoCliente = confirm("Deseja remover o cliente " + cliente.nome + "?");
+    return confirmaRemocaoCliente;
   }
 
   abrirModalCliente(cliente: Cliente) {
@@ -57,5 +61,4 @@ export class ListarClienteComponent implements OnInit {
   abrirModalNovo() {
     return this.modalService.open(InserirClienteComponent);
   }
-
 }

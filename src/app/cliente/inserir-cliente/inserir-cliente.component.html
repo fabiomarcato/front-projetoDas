@@ -1,8 +1,6 @@
 <div class="modal-header">
   <h4>Novo Cliente</h4>
 </div>
-
-
 <div class="modal-body">
   <form #formCliente="ngForm">
     <div class="form-group">
@@ -33,7 +31,6 @@
     </div>
   </form>
 </div>
-
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" (click)="inserir()" [disabled]="!formCliente.form.valid">
     <i class="fa fa-save" aria-hidden="true"></i> Salvar </button>

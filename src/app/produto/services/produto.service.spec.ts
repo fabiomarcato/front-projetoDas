@@ -24,6 +24,7 @@ describe('Serviço de produtos', () => {
   it('Serviço de produtos é criado', () => {
     expect(produtoService).toBeTruthy();
   });
+  
   it('Deve retornar uma lista com 0 produtos', () => {
     const mockProdutos: Produto[] = [];
     produtoService.listarTodos().subscribe((produtos: Produto[]) => {

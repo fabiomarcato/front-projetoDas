@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Produto } from 'src/app/shared/models/produto.model';
+
 @Injectable({
   providedIn: 'root'
 })
-export class ProdutoService {
 
+export class ProdutoService {
+  
   constructor(private httpClient: HttpClient) { }
 
   BASE_URL = 'https://apiufpr2021.herokuapp.com/api/v1/produtos/'

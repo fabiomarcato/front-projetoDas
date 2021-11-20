@@ -10,10 +10,9 @@ import { InserirProdutoComponent } from '../inserir-produto/inserir-produto.comp
   templateUrl: './listar-produto.component.html',
   styleUrls: ['./listar-produto.component.css']
 })
-export class ListarProdutoComponent implements OnInit {
 
+export class ListarProdutoComponent implements OnInit {
   produtos: Produto[] = [];
-  aux?: Boolean;
   todosPedidos: any;
 
   constructor(private produtoService: ProdutoService, private modalService: NgbModal) { }
@@ -37,18 +36,19 @@ export class ListarProdutoComponent implements OnInit {
 
   remover($event: any, produto: Produto): void {
     $event.preventDefault();
-      if (this.confirmaRemoverProduto(produto))
-        this.produtoService.remover(produto.id!).subscribe({
-          error: (erro) => this.mostrarErro(erro),
-          complete: () => document.location.reload()
-        });
+    if (this.confirmaRemoverProduto(produto)){
+      this.produtoService.remover(produto.id!).subscribe({
+        error: (erro) => this.mostrarErro(erro),
+        complete: () => document.location.reload()
+      });
+    }
   }
 
-  confirmaRemoverProduto(produto: Produto){
+  confirmaRemoverProduto(produto: Produto) {
     return confirm('Deseja realmente remover o produto "' + produto.descricao + '"?');
   }
 
-  mostrarErro(erro: { error: { Erro: any; }; }){
+  mostrarErro(erro: { error: { Erro: any; }; }) {
     alert(erro.error.Erro)
   }
 

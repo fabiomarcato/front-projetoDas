@@ -16,8 +16,8 @@ export class ListarPedidoComponent implements OnInit {
 
   clientePedido?: Pedidos[];
   cliente!: Cliente;
-  message!: string | null;
-  
+  messagem!: string | null;
+
   constructor(private pedidoService: PedidoService, private clienteService: ClienteService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -26,26 +26,26 @@ export class ListarPedidoComponent implements OnInit {
   buscarCpfCliente(cpf: string): void {
     this.clienteService.buscaPorCpf(cpf).subscribe({
       next: (clientes) => {
-      if (clientes) {
-        clientes.forEach((cliente) => this.cliente = cliente);
-        this.buscarPedidosPorCliente(cpf);
-      }
-      else {
-        this.messagemClienteNaoEncontrado();
-      }
-    },
-    error: (erro) => this.mostrarErro(erro),
-  })
+        if (clientes) {
+          clientes.forEach((cliente) => this.cliente = cliente);
+          this.buscarPedidosPorCliente(cpf);
+        }
+        else {
+          this.messagemClienteNaoEncontrado();
+        }
+      },
+      error: (erro) => this.mostrarErro(erro),
+    })
   }
 
-  buscarPedidosPorCliente(cpf: string): void {;
-    this.pedidoService.listarPedidosCPF(cpf).subscribe((data: any) => {
-      if (data['Status']) {
+  buscarPedidosPorCliente(cpf: string): void {
+    this.pedidoService.listarPedidosCPF(cpf).subscribe((pedidoCpf: any) => {
+      if (pedidoCpf['Status']) {
         this.messagemClienteSemPedidos();
       }
       else {
-        this.clientePedido = data;
-        this.message = null;
+        this.clientePedido = pedidoCpf;
+        this.messagem = null;
       }
     });
   }
@@ -56,16 +56,16 @@ export class ListarPedidoComponent implements OnInit {
   }
 
   messagemClienteSemPedidos() {
-    this.message = 'Cliente não possui pedidos!'
+    this.messagem = 'Cliente não possui pedidos!'
     this.clientePedido = undefined;
   }
 
   messagemClienteNaoEncontrado() {
-    this.message = 'Cliente não encontrado!'
+    this.messagem = 'Cliente não encontrado!'
     this.clientePedido = undefined;
   }
 
-  mostrarErro(erro: { error: { Erro: any; }; }){
-    erro.error.Erro == undefined? alert('Insira um CPF'):alert(erro.error.Erro);
+  mostrarErro(erro: { error: { Erro: any; }; }) {
+    erro.error.Erro == undefined ? alert('Insira um CPF') : alert(erro.error.Erro);
   }
 }

@@ -25,7 +25,7 @@ export class EditarProdutoComponent implements OnInit {
       this.produtoService.atualizar(this.produto).subscribe({
         error: (erro) => this.mostrarErro(erro),
         complete: () => document.location.reload()
-        });
+      });
     }
   }
 
@@ -33,7 +33,7 @@ export class EditarProdutoComponent implements OnInit {
     return this.formProduto.form.valid;
   }
 
-  mostrarErro(erro: { error: { Erro: any; }; }){
+  mostrarErro(erro: { error: { Erro: any; }; }) {
     alert(erro.error.Erro)
   }
 

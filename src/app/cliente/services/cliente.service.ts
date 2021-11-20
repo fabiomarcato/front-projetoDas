@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Cliente } from 'src/app/shared/models/cliente.model';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -36,6 +37,5 @@ export class ClienteService {
   remover(id: number): Observable<Cliente> {
     return this.httpClient.delete<Cliente>(this.BASE_URL + id);
   }
-
 }
 

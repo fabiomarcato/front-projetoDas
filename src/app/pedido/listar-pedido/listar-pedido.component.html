@@ -1,5 +1,4 @@
 <h1>Lista de pedidos</h1>
-
 <div class="row mt-5">
   <div class="col-4">
     <div class="input-group mb-3">
@@ -11,11 +10,9 @@
     </div>
   </div>
 </div>
-
-<div *ngIf="message" class="alert alert-danger">
-  <div>{{message}}</div>
+<div *ngIf="messagem" class="alert alert-danger">
+  <div>{{messagem}}</div>
 </div>
-
 <div *ngIf="clientePedido">
   <table class="table table-striped table-bordered table-hover">
     <tbody>

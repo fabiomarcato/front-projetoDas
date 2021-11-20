@@ -4,11 +4,9 @@ import { ProdutoService } from '../../produto/services/produto.service';
 import { PedidoService } from '../services/pedido.service';
 import { Pedidos } from '../../shared/models/pedidos.model';
 import { Produto } from '../../shared/models/produto.model';
+import { Cliente } from '../../shared/models/cliente.model';
 import { ItensDoPedido } from '../../shared/models/pedidos.model';
-
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-inserir-pedido',
@@ -18,7 +16,7 @@ import { Router } from '@angular/router';
 export class InserirPedidoComponent implements OnInit {
 
   pedido!: Pedidos
-  cliente!: {cpf:string, nome:string, sobreNome:string, id:number}  
+  cliente!: Cliente
   produtosPedido: ItensDoPedido[] = []
   message!: string | null
   link!: string | null
@@ -30,35 +28,9 @@ export class InserirPedidoComponent implements OnInit {
     private pedidoService: PedidoService, 
     private clienteService: ClienteService, 
     private produtoService: ProdutoService, 
-    private router: Router
   ) { }
 
   ngOnInit(): void {
-    
-  }
-
-  buscarProdutos(){
-    this.produtoService.listarTodos().subscribe(
-      (produtos) => {
-        if(produtos){
-          this.produtos = produtos
-        } else{
-          this.message = 'Nenhum produto encontrado!'
-        }
-      },
-      (error) => {console.log(error)},
-      () => {this.listarProdutos()} 
-    )
-  }
-
-  listarDataAtual(){
-    let agora = new Date()
-    let dataAtual = `${agora.getFullYear()}-${(agora.getMonth() + 1)}-${agora.getDate()} ${agora.getHours()}:${agora.getMinutes()}:${agora.getSeconds()}`
-    return dataAtual
-  }
-
-  listarProdutos(){
-    this.produtosPedido = this.pedidoService.converteProdutosEmItensDoPedido(this.produtos, this.cliente.id.toString())
   }
 
   buscarCpf(cpf: string): void{
@@ -72,40 +44,33 @@ export class InserirPedidoComponent implements OnInit {
           this.message = 'Cliente não encontrado!'
         }
       },
-      (error) => {console.log(error)},
+      (erro) => this.mostrarErro(erro),
     )
   }
-  
-  pedidoValido(){
-    let pedidoValido = false
-    const quantidadeMaiorQueZero = (produto: any) => produto.quantidade > 0
-    
-    if (this.produtosPedido.some(quantidadeMaiorQueZero)){
-      pedidoValido = true
-    }
-    return pedidoValido
-  }
-  
-  converteDadosParaPedido(){
-    const quantidadeMaiorQueZero = (produto: any) => produto.quantidade > 0
-    let products = this.produtosPedido.filter(quantidadeMaiorQueZero)
-    let itens = []
-    for (let product of products){
-      itens.push(
-        {
-          idCliente:product.idCliente, 
-          produto:product.produto, 
-          quantidade:product.quantidade
-        }
-      )
-    }
-    this.pedido = {
-      data: this.listarDataAtual(), 
-      idCliente: products[0].idCliente?.toString(), 
-      itensDoPedido: itens
-    }
+
+  mostrarErro(erro: { error: { Erro: any; }; }){
+    erro.error.Erro == undefined? alert('Insira um CPF'):alert(erro.error.Erro);
   }
 
+  buscarProdutos(){
+    this.produtoService.listarTodos().subscribe(
+      {
+        next: (produtos) => {
+          if(produtos){
+            this.produtos = produtos
+          } else{
+            this.message = 'Nenhum produto encontrado!'
+          }
+        },
+        complete: () => this.listarProdutos()
+      }
+    )
+  }
+
+  listarProdutos(){
+    this.produtosPedido = this.pedidoService.converteProdutosEmItensDoPedido(this.produtos, this.cliente.id!.toString())
+  }
+    
   inserirNovoPedido(){
     if(this.pedidoValido()){
       this.message = null
@@ -116,13 +81,49 @@ export class InserirPedidoComponent implements OnInit {
             this.message = 'Pedido inserido com sucesso!'
             this.link = "/"
             this.produtosPedido = []
-            //this.router.navigate([""])
           }
-        },
-        (error) => {console.log(error)}
+        }
       )      
     }else{
       this.message = 'Nenhum produto adicionado ao pedido.'
     }
   }
+
+  pedidoValido(){
+    let pedidoValido = false
+    const quantidadeMaiorQueZero = (produto: any) => produto.quantidade > 0
+    
+    if (this.produtosPedido.some(quantidadeMaiorQueZero)){
+      pedidoValido = true
+    }
+    return pedidoValido
+  }
+
+  converteDadosParaPedido(){
+    const quantidadeMaiorQueZero = (produto: ItensDoPedido) => produto.quantidade! > 0
+    let produtos = this.produtosPedido.filter(quantidadeMaiorQueZero)
+    let itens = []
+    for (let produto of produtos){
+      itens.push(
+        {
+          idCliente:produto.idCliente, 
+          produto:produto.produto, 
+          quantidade:produto.quantidade
+        }
+      )
+    }
+    this.pedido = {
+      data: this.listarDataAtual(), 
+      idCliente: produtos[0].idCliente?.toString(), 
+      itensDoPedido: itens
+    }
+  }
+  
+  listarDataAtual(){
+    let agora = new Date()
+    let dataAtual = `${agora.getFullYear()}-${(agora.getMonth() + 1)}-${agora.getDate()} ${agora.getHours()}:${agora.getMinutes()}:${agora.getSeconds()}`
+    return dataAtual
+  }
 } 
+
+

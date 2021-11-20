@@ -6,13 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  isExpanded = false;
+  expandido = false;
 
   collapse() {
-    this.isExpanded = false;
+    this.expandido = false;
   }
 
   toggle() {
-    this.isExpanded = !this.isExpanded;
+    this.expandido = !this.expandido;
   }
 }

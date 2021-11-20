@@ -1,5 +1,4 @@
 <h1>Novos Pedidos</h1>
-
 <div *ngIf="message; else conteudo">
   <div class="alert alert-warning">{{message}} <a *ngIf="link" href="{{link}}" style="margin-left: 15px; color: black; text-decoration: none;"> Voltar para Home</a></div>
   <div class="row mt-5">
@@ -11,7 +10,6 @@
       </div>
   </div>
 </div>
-
 <ng-template #conteudo>
   <div class="row mt-5">
     <div class="col-4">
