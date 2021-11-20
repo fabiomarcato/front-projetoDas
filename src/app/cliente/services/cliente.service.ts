@@ -29,8 +29,8 @@ export class ClienteService {
     return this.httpClient.get<[]>(`${this.BASE_URL}cpf/${cpf}`, this.httpOptions)
   }
 
-  atualizar(cliente: Cliente): Observable<Cliente[]> {
-    return this.httpClient.put<Cliente[]>(this.BASE_URL + cliente.id, JSON.stringify(cliente), this.httpOptions);
+  atualizar(cliente: Cliente): Observable<Cliente> {
+    return this.httpClient.put<Cliente>(this.BASE_URL + cliente.id, JSON.stringify(cliente), this.httpOptions);
   }
 
   remover(id: number): Observable<Cliente> {
