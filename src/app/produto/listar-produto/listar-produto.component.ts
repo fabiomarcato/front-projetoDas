@@ -44,6 +44,14 @@ export class ListarProdutoComponent implements OnInit {
         });
   }
 
+  confirmaRemoverProduto(produto: Produto){
+    return confirm('Deseja realmente remover o produto "' + produto.descricao + '"?');
+  }
+
+  mostrarErro(erro: { error: { Erro: any; }; }){
+    alert(erro.error.Erro)
+  }
+
   editarProduto(produto: Produto) {
     const modalRef = this.modalService.open(EditarProdutoComponent);
     modalRef.componentInstance.produto = produto;
@@ -51,14 +59,6 @@ export class ListarProdutoComponent implements OnInit {
 
   novoProduto() {
     return this.modalService.open(InserirProdutoComponent);
-  }
-
-  confirmaRemoverProduto(produto: Produto){
-    return confirm('Deseja realmente remover o produto "' + produto.descricao + '"?');
-  }
-
-  mostrarErro(erro: { error: { Erro: any; }; }){
-    alert(erro.error.Erro)
   }
 }
 

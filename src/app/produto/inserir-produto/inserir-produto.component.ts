@@ -30,16 +30,16 @@ export class InserirProdutoComponent implements OnInit {
     }
   }
 
-  fecharModal() {
-    this.activeModal.dismiss();
-    document.location.reload();
-  }
-
   formValido() {
     return this.formProduto.form.valid;
   }
 
   mostrarErro(erro: { error: { Erro: any; }; }){
     alert(erro.error.Erro)
+  }
+  
+  fecharModal() {
+    this.activeModal.dismiss();
+    document.location.reload();
   }
 }

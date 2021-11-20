@@ -22,8 +22,7 @@ export class InserirClienteComponent implements OnInit {
 
   inserir() {
     if (this.formCliente.form.valid) {
-      this.clienteService.inserir(this.cliente)
-        .subscribe({
+      this.clienteService.inserir(this.cliente).subscribe({
           error: (erro) => this.mostrarErro(erro),
           complete: () => document.location.reload()
         });

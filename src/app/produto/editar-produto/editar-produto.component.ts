@@ -21,7 +21,7 @@ export class EditarProdutoComponent implements OnInit {
   }
 
   atualizar(): void {
-    if (this.formProduto.form.valid) {
+    if (this.formValido()) {
       this.produtoService.atualizar(this.produto).subscribe({
         error: (erro) => this.mostrarErro(erro),
         complete: () => document.location.reload()
@@ -29,12 +29,16 @@ export class EditarProdutoComponent implements OnInit {
     }
   }
 
-  fecharModal() {
-    this.activeModal.dismiss();
-    document.location.reload();
+  formValido() {
+    return this.formProduto.form.valid;
   }
 
   mostrarErro(erro: { error: { Erro: any; }; }){
     alert(erro.error.Erro)
+  }
+
+  fecharModal() {
+    this.activeModal.dismiss();
+    document.location.reload();
   }
 }
