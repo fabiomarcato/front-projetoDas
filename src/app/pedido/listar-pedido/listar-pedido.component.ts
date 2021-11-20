@@ -4,7 +4,6 @@ import { ClienteService } from 'src/app/cliente/services/cliente.service';
 import { ModalPedidoComponent } from '../modal-pedido/modal-pedido.component';
 import { Pedidos } from '../../shared/models/pedidos.model';
 import { Cliente } from '../../shared/models/cliente.model';
-import { Produto } from 'src/app/shared/models/produto.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -15,47 +14,58 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ListarPedidoComponent implements OnInit {
 
-  pedido: Pedidos[] = [];
   clientePedido?: Pedidos[];
   cliente!: Cliente;
-  produtosPedido!: any;
   message!: string | null;
-  produtos: Produto[] = [];
-
+  
   constructor(private pedidoService: PedidoService, private clienteService: ClienteService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
 
   buscarCpfCliente(cpf: string): void {
-    this.clienteService.buscaPorCpf(cpf).subscribe((data) => {
-      if (data) {
-        data.forEach((x) => this.cliente = x);
+    this.clienteService.buscaPorCpf(cpf).subscribe({
+      next: (clientes) => {
+      if (clientes) {
+        clientes.forEach((cliente) => this.cliente = cliente);
         this.buscarPedidosPorCliente(cpf);
       }
       else {
-        this.message = 'Cliente não encontrado!'
-        this.clientePedido = undefined;
+        this.messagemClienteNaoEncontrado();
       }
-    })
+    },
+    error: (erro) => this.mostrarErro(erro),
+  })
   }
 
   buscarPedidosPorCliente(cpf: string): void {;
-    this.pedidoService.listarPedidosCPF(cpf).subscribe((data) => {
-      if (data.length != 0) {
+    this.pedidoService.listarPedidosCPF(cpf).subscribe((data: any) => {
+      if (data['Status']) {
+        this.messagemClienteSemPedidos();
+      }
+      else {
         this.clientePedido = data;
         this.message = null;
       }
-      else {
-        this.message = 'Cliente não possui pedidos!'
-        this.clientePedido = undefined;
-      }
     });
-
   }
 
   verPedido(pedido: Pedidos) {
     const modalRef = this.modalService.open(ModalPedidoComponent);
     modalRef.componentInstance.pedido = pedido;
+  }
+
+  messagemClienteSemPedidos() {
+    this.message = 'Cliente não possui pedidos!'
+    this.clientePedido = undefined;
+  }
+
+  messagemClienteNaoEncontrado() {
+    this.message = 'Cliente não encontrado!'
+    this.clientePedido = undefined;
+  }
+
+  mostrarErro(erro: { error: { Erro: any; }; }){
+    erro.error.Erro == undefined? alert('Insira um CPF'):alert(erro.error.Erro);
   }
 }

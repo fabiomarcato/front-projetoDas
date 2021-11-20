@@ -3,7 +3,6 @@ import { ProdutoService } from '../services/produto.service';
 import { Produto } from 'src/app/shared/models/produto.model';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
 @Component({
   selector: 'app-inserir-produto',
   templateUrl: './inserir-produto.component.html',
@@ -15,7 +14,7 @@ export class InserirProdutoComponent implements OnInit {
 
   constructor(
     private produtoService: ProdutoService,
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
   ) { }
 
   ngOnInit(): void {
@@ -23,15 +22,24 @@ export class InserirProdutoComponent implements OnInit {
   }
 
   inserir(): void {
-    if (this.formProduto.form.valid) {
+    if (this.formValido()) {
       this.produtoService.inserir(this.produto).subscribe({
+        error: (erro) => this.mostrarErro(erro),
         complete: () => document.location.reload()
-      });
+        })
     }
   }
 
   fecharModal() {
     this.activeModal.dismiss();
     document.location.reload();
+  }
+
+  formValido() {
+    return this.formProduto.form.valid;
+  }
+
+  mostrarErro(erro: { error: { Erro: any; }; }){
+    alert(erro.error.Erro)
   }
 }

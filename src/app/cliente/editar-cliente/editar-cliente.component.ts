@@ -26,6 +26,7 @@ export class EditarClienteComponent implements OnInit {
     if (this.formCliente.form.valid) {
       this.clienteService.atualizar(this.cliente)
         .subscribe({
+          error: (erro) => this.mostrarErro(erro),
           complete: () => document.location.reload()
         });
     }
@@ -34,5 +35,9 @@ export class EditarClienteComponent implements OnInit {
   fecharModal() {
     this.activeModal.dismiss();
     document.location.reload();
+  }
+
+  mostrarErro(erro: { error: { Erro: any; }; }){
+    alert(erro.error.Erro)
   }
 }

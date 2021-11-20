@@ -15,9 +15,9 @@ export class ModalPedidoComponent implements OnInit {
   constructor(public activeModal: NgbActiveModal, public pedidoService: PedidoService) { }
 
   ngOnInit(): void {
-    this.pedidoService.listarItensPedido(this.pedido.idPedido!).subscribe((data) => {
-      this.itensDoPedido = data;
-      this.itensDoPedido = this.itensDoPedido['itensDoPedido'];
+    this.pedidoService.listarItensPedido(this.pedido.idPedido!).subscribe((itensPedido) => {
+    this.itensDoPedido = itensPedido;
+    this.itensDoPedido = this.itensDoPedido['itensDoPedido'];
     })
   }
 }
