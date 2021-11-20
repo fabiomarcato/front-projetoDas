@@ -124,7 +124,7 @@ describe('ClienteService', () => {
     req.flush(mockCliente);
   });
 
-  it('remover(cliente.id) DELETE - Deve remover um produto após o outro', () => {
+  it('remover(cliente.id) DELETE - Deve remover um cliente', () => {
     let mockCliente: Cliente =
     {
       "cpf": "04210691631",
