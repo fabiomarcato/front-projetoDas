@@ -7,7 +7,7 @@
   <form #formCliente="ngForm">
     <div class="form-group">
       <label for="cpf">CPF:</label>
-      <input type="text" class="form-control" mask="CPF_CNPJ" id="cpf" name="cpf" [(ngModel)]='cliente.cpf'
+      <input type="text" class="form-control" maxlength="14" mask="CPF_CNPJ" id="cpf" name="cpf" [(ngModel)]='cliente.cpf'
         #cpf="ngModel" required>
       <div *ngIf="cpf.errors && (cpf.dirty || cpf.touched)" class="alert alert-danger">
         <div [hidden]="!cpf.errors?.required"> Digite o CPF do Cliente. </div>

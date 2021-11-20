@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoService } from '../services/produto.service';
 import { Produto } from 'src/app/shared/models/produto.model';
-import { PedidoService } from 'src/app/pedido/services/pedido.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditarProdutoComponent } from '../editar-produto/editar-produto.component';
 import { InserirProdutoComponent } from '../inserir-produto/inserir-produto.component';
@@ -17,8 +16,7 @@ export class ListarProdutoComponent implements OnInit {
   aux?: Boolean;
   todosPedidos: any;
 
-  constructor(private produtoService: ProdutoService, private pedidoService: PedidoService,
-    private modalService: NgbModal) { }
+  constructor(private produtoService: ProdutoService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.listarTodos();
@@ -26,12 +24,12 @@ export class ListarProdutoComponent implements OnInit {
 
   listarTodos() {
     return this.produtoService.listarTodos().subscribe({
-      next: (data: Produto[]) => {
-        if (data == null) {
+      next: (produtos: Produto[]) => {
+        if (produtos == null) {
           this.produtos = [];
         }
         else {
-          this.produtos = data;
+          this.produtos = produtos;
         }
       }
     });
@@ -39,9 +37,9 @@ export class ListarProdutoComponent implements OnInit {
 
   remover($event: any, produto: Produto): void {
     $event.preventDefault();
-      if (confirm('Deseja realmente remover o produto "' + produto.descricao + '"?'))
+      if (this.confirmaRemoverProduto(produto))
         this.produtoService.remover(produto.id!).subscribe({
-          error: (err) => alert(err.error.Erro),
+          error: (erro) => this.mostrarErro(erro),
           complete: () => document.location.reload()
         });
   }
@@ -53,6 +51,14 @@ export class ListarProdutoComponent implements OnInit {
 
   novoProduto() {
     return this.modalService.open(InserirProdutoComponent);
+  }
+
+  confirmaRemoverProduto(produto: Produto){
+    return confirm('Deseja realmente remover o produto "' + produto.descricao + '"?');
+  }
+
+  mostrarErro(erro: { error: { Erro: any; }; }){
+    alert(erro.error.Erro)
   }
 }
 

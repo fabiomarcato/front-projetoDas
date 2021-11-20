@@ -24,6 +24,7 @@ export class InserirClienteComponent implements OnInit {
     if (this.formCliente.form.valid) {
       this.clienteService.inserir(this.cliente)
         .subscribe({
+          error: (erro) => this.mostrarErro(erro),
           complete: () => document.location.reload()
         });
     }
@@ -32,5 +33,9 @@ export class InserirClienteComponent implements OnInit {
   fecharModal() {
     this.activeModal.dismiss();
     document.location.reload();
+  }
+
+  mostrarErro(erro: { error: { Erro: any; }; }){
+    alert(erro.error.Erro)
   }
 }
