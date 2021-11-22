@@ -252,27 +252,20 @@ describe('Serviço de produtos', () => {
 
     produtoService.remover(produtoRemovido.id!).subscribe((produto) => {
       expect(produto).toBeNull;
-
     });
+
     let req = httpTestingController.expectOne(BASE_URL + produtoRemovido.id);
     expect(req.request.method).toEqual('DELETE');
     req.flush(produtoRemovido);
 
-    produtoRemovido =
-    {
-      "descricao": "Hidrocor",
-      "id": 256
-    }
-
     produtoService.remover(produtoRemovido.id!).subscribe((produto) => {
       expect(produto).toBeNull;
-
     });
+
     req = httpTestingController.expectOne(BASE_URL + produtoRemovido.id);
     expect(req.request.method).toEqual('DELETE');
     req.flush(produtoRemovido);
   });
-
 });
 
 

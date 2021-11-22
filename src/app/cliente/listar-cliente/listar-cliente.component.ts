@@ -37,7 +37,7 @@ export class ListarClienteComponent implements OnInit {
     $event.preventDefault();
     if (this.confirmaRemoverCliente(cliente)) {
       this.clienteService.remover(cliente.id!).subscribe({
-        error: (err) => alert(err.error.Erro),
+        error: (erro) => this.mostrarErro(erro),
         complete: () => document.location.reload()
       });
     }
@@ -46,6 +46,10 @@ export class ListarClienteComponent implements OnInit {
   confirmaRemoverCliente(cliente: Cliente){
     let confirmaRemocaoCliente = confirm("Deseja remover o cliente " + cliente.nome + "?");
     return confirmaRemocaoCliente;
+  }
+
+  mostrarErro(erro: { error: { Erro: any; }; }){
+    alert(erro.error.Erro)
   }
 
   abrirModalCliente(cliente: Cliente) {
