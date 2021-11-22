@@ -34,7 +34,7 @@ export class ListarPedidoComponent implements OnInit {
           this.messagemClienteNaoEncontrado();
         }
       },
-      error: (erro) => this.mostrarErro(erro),
+      error: (erro) => this.mostrarErroCPFVazio(erro),
     })
   }
 
@@ -44,20 +44,11 @@ export class ListarPedidoComponent implements OnInit {
         this.messagemClienteSemPedidos();
       }
       else {
+        this.formatarDataPedido(pedidoCpf);
         this.clientePedido = pedidoCpf;
         this.messagem = null;
       }
     });
-  }
-
-  verPedido(pedido: Pedidos) {
-    const modalRef = this.modalService.open(ModalPedidoComponent);
-    modalRef.componentInstance.pedido = pedido;
-  }
-
-  messagemClienteSemPedidos() {
-    this.messagem = 'Cliente não possui pedidos!'
-    this.clientePedido = undefined;
   }
 
   messagemClienteNaoEncontrado() {
@@ -65,7 +56,23 @@ export class ListarPedidoComponent implements OnInit {
     this.clientePedido = undefined;
   }
 
-  mostrarErro(erro: { error: { Erro: any; }; }) {
+  mostrarErroCPFVazio(erro: { error: { Erro: any; }; }) {
     erro.error.Erro == undefined ? alert('Insira um CPF') : alert(erro.error.Erro);
+  }
+
+  messagemClienteSemPedidos() {
+    this.messagem = 'Cliente não possui pedidos!'
+    this.clientePedido = undefined;
+  }
+
+  formatarDataPedido(pedidosCpf: any){
+    for (let pedidoCpf of pedidosCpf){
+      pedidoCpf.data = pedidoCpf.data.substring(0,10).split('-').reverse().join('/') + " | " + pedidoCpf.data.substring(11,19);
+    }
+  }
+
+  verPedido(pedido: Pedidos) {
+    const modalRef = this.modalService.open(ModalPedidoComponent);
+    modalRef.componentInstance.pedido = pedido;
   }
 }

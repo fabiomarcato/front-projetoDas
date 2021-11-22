@@ -16,7 +16,7 @@ describe('Serviço de produtos', () => {
     produtoService = TestBed.inject(ProdutoService);
     httpTestingController = TestBed.get(HttpTestingController);
   });
-  
+
   afterEach(() => {
     httpTestingController.verify();
   });
@@ -24,7 +24,7 @@ describe('Serviço de produtos', () => {
   it('Serviço de produtos é criado', () => {
     expect(produtoService).toBeTruthy();
   });
-  
+
   it('Deve retornar uma lista com 0 produtos', () => {
     const mockProdutos: Produto[] = [];
     produtoService.listarTodos().subscribe((produtos: Produto[]) => {
@@ -34,7 +34,7 @@ describe('Serviço de produtos', () => {
     expect(req.request.method).toEqual('GET');
     req.flush(mockProdutos);
   });
-  
+
   it('Deve retornar uma lista com 1 produto', () => {
     const mockProdutos: Produto[] = [
       {
@@ -50,7 +50,7 @@ describe('Serviço de produtos', () => {
     const req = httpTestingController.expectOne(BASE_URL);
     req.flush(mockProdutos);
   });
-  
+
   it('Deve retornar uma lista com 2 produtos', () => {
     const mockProdutos: Produto[] = [
       {
@@ -73,7 +73,7 @@ describe('Serviço de produtos', () => {
     expect(req.request.method).toEqual('GET');
     req.flush(mockProdutos);
   });
-  
+
   it('Deve retornar uma lista com vários produtos', () => {
     const mockProdutos: Produto[] = [
       {
@@ -252,8 +252,8 @@ describe('Serviço de produtos', () => {
 
     produtoService.remover(produtoRemovido.id!).subscribe((produto) => {
       expect(produto).toBeNull;
-
     });
+
     let req = httpTestingController.expectOne(BASE_URL + produtoRemovido.id);
     expect(req.request.method).toEqual('DELETE');
     req.flush(produtoRemovido);
@@ -266,13 +266,12 @@ describe('Serviço de produtos', () => {
 
     produtoService.remover(produtoRemovido.id!).subscribe((produto) => {
       expect(produto).toBeNull;
-
     });
+
     req = httpTestingController.expectOne(BASE_URL + produtoRemovido.id);
     expect(req.request.method).toEqual('DELETE');
     req.flush(produtoRemovido);
   });
-
 });
 
 
