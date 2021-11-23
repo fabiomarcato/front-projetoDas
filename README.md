@@ -5,7 +5,6 @@ Neste repositório constam apenas arquivos referentes ao frontend.
 Link repositório backend: https://github.com/Jorgehernandes88/ApiUfpr
 
 ## Servidor de Desenvolvimento
-
 Execute `ng serve` para subir um servidor de desenvolvimento. Navegue para `http://localhost:4200/`. O aplicativo irá atualizar automaticamente caso os arquivos sofram alterações.
 
 Atualmente a API do backend encontra-se na nuvem e pode ser acessada no link:  https://apiufpr2021.herokuapp.com/swagger-ui.html#/
