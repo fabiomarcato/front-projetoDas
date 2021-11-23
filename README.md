@@ -1,27 +1,23 @@
 # FrontProjetoDas
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.1.
+Repositório destinado a criação de um sistema para controlar o processo de pedido de produtos.
+Neste repositório constam apenas arquivos referentes ao frontend.
+Link repositório backend: https://github.com/Jorgehernandes88/ApiUfpr
 
-## Development server
+## Servidor de Desenvolvimento
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Execute `ng serve` para subir um servidor de desenvolvimento. Navegue para `http://localhost:4200/`. O aplicativo irá atualizar automaticamente caso os arquivos sofram alterações.
 
-## Code scaffolding
+Atualmente a API do backend encontra-se na nuvem e pode ser acessada no link:  https://apiufpr2021.herokuapp.com/swagger-ui.html#/
+Caso queira executar o backend localmente, é necessário atualizar as variáveis de URL que se encontram dentro dos arquivos service.ts.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Para instalação local do banco de dados Mysql é necessário alterar o arquivo application.properties incluíndo o nome do banco, usuário e senha. 
+Para criação das tabelas, utilizar o script fornecido no link: https://github.com/Jorgehernandes88/ApiUfpr/tree/main/apiUfpr/script_sql.txt
 
-## Build
+## Testes unitários
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Execute `ng test` para rodar os testes unitários através do navegador via [Karma](https://karma-runner.github.io).
 
-## Running unit tests
+## Ajuda
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Para mais ajuda sobre Angular CLI, execute `ng help` ou visite o site oficial do framework [Angular CLI Overview and Command Reference](https://angular.io/cli).
