@@ -1,6 +1,8 @@
 # FrontProjetoDas
 
 Repositório destinado a criação de um sistema para controlar o processo de pedido de produtos.
+Esta aplicação pode ser visualizada online através do link: https://frontdas.netlify.app/
+
 Neste repositório constam apenas arquivos referentes ao frontend.
 Link repositório backend: https://github.com/Jorgehernandes88/ApiUfpr
 
