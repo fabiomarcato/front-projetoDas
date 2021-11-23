@@ -1,3 +1,11 @@
+.infos{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 50vw;
+  height: 80vh;
+}
 .writing-section{
     display: flex;
     flex-direction: column;
